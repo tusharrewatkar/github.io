@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Mirobot 6DOF Mini Robotic Arm - Ivan Smirnov</title>
+    <meta name="author" content="Ivan Smirnov">
+    <meta name="viewport" content="width=1100">
+    <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+    <link rel="icon" type="image/png" href="../img/logo-rocket.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #0f0f0f;
+            color: #ffffff;
+        }
+
+        img, video {
+            border-radius: 2px;
+            margin: 10px 0;
+        }
+
+        .image-container, .video-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        h1, h2, h3, h4, h5 {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        h3 {
+            color: #2470ce;
+        }
+
+        p, ul, ol {
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 40px;
+        }
+
+        code {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            padding: 3px 5px;
+            border-radius: 3px;
+        }
+
+        .diagram {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .diagram img {
+            border: 1px solid #444;
+            padding: 10px;
+            background: #1a1a1a;
+        }
+
+        .highlight {
+            background: #1e3a5f;
+            border-left: 5px solid #2196F3;
+            padding: 10px;
+            margin: 20px 0;
+        }
+
+        .code-block {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        a {
+            color: #2470ce;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <table width="900" border="0" align="center" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="100%" valign="top">
+                            <h1>Wlkata Mirobot and Intel RealSense F200 Integration</h1>
+                            <p>
+                                This extended guide outlines a comprehensive process of integrating the Wlkata Mirobot robotic arm with the Intel RealSense F200 depth camera to achieve advanced capabilities such as 3D vision-based object manipulation, environment perception, and task automation using Vision-Language Models (VLMs).
+                            </p>
+
+                            <h2>1. Intel RealSense F200 Depth Camera</h2>
+                            <p>
+                                The Intel RealSense F200 camera is an early-generation depth sensor originally designed for interactive computing. Although it is no longer officially supported, careful integration using archived drivers and legacy SDKs can still unlock its potential as a low-cost depth source for robotics research. Researchers can leverage the F200's infrared-based structured light system for near-field depth sensing, enabling the robot to understand its environment's geometry.
+                            </p>
+
+                            <h3>1.1 Camera Appearance and Specifications</h3>
+                            <p>
+                                The F200 camera is compact and well-suited for desktop scenarios. It typically operates best within a range of approximately 0.2–1.2 meters. While newer RealSense models (like D400 series) offer higher fidelity and broader support, the F200 still provides valuable data for small-scale manipulation tasks.
+                            </p>
+                            <div class="image-container" align="center">
+                                <img src="../img/camera_daylight.jpg" width="80%" alt="Camera in Daylight" style="margin:20px;">
+                            </div>
+
+                            <h3>1.2 Depth and RGB Output</h3>
+                            <p>
+                                The camera's dual output includes:
+                            </p>
+                            <ul>
+                                <li><b>Depth (640x480):</b> Captures a per-pixel distance measurement, enabling 3D perception.</li>
+                                <li><b>RGB (1920x1080):</b> Provides a high-quality color image for object recognition and segmentation.</li>
+                            </ul>
+                            <p>
+                                In practice, the depth stream allows the Mirobot to identify object positions in 3D space, while the RGB image supports color-based classification. Using these modalities together is crucial for robust object detection and scene understanding.
+                            </p>
+
+                            <div align="center">
+                                <img src="../img/depth_camera.gif" width="80%" alt="Depth vs RGB Output" style="margin:20px;">
+                            </div>
+                            <p>
+                                The example above demonstrates real-time depth capture. Darker regions represent points further from the camera, while lighter or more saturated colors denote closer surfaces.
+                            </p>
+                            <div align="center">
+                                <img src="../img/face_depth.png" width="40%" alt="Face in Depth Mode" style="margin:20px;">
+                            </div>
+
+                            <h3>1.3 Setup and Installation</h3>
+                            <p>
+                                To use the F200's depth functionality on a modern Windows environment, follow these steps:
+                            </p>
+                            <ul>
+                                <li>Install <b>Depth Camera Manager (DCM)</b> for the F200 (e.g., <code>intel_rs_dcm_f200_1.5.98.25275.exe</code>)</li>
+                                <li>Install the 2016 R2 RealSense SDK (e.g., <code>intel_rs_sdk_offline_package_10.0.26.0396</code>)</li>
+                                <li>Connect the camera to a USB 3.0 port on a machine with an Intel 4th generation or newer CPU.</li>
+                            </ul>
+                            <p>
+                                Once installed, you can verify the depth stream using the legacy RealSense SDK's sample applications. Although not supported by the modern RealSense SDK 2.0, the F200 can still be integrated into contemporary workflows by using the legacy drivers and bridging solutions.
+                            </p>
+                            <div align="center">
+                                <img src="../img/robot_camera_setup.jpg" width="70%" alt="Camera and Robot Setup Sketch" style="margin:20px;">
+                            </div>
+                            <p>
+                                The sketch above visualizes a possible angled camera placement. Unlike a top-down setup, an angled camera requires thorough calibration to ensure accurate mapping from image coordinates to the robot's workspace coordinates.
+                            </p>
+
+                            <h2>2. Wlkata Mirobot Robotic Arm</h2>
+                            <p>
+                                The Wlkata Mirobot is a compact 6DoF robotic arm often used for education, prototyping, and research. Its precision and small footprint make it an excellent platform for experimenting with vision-guided tasks. By integrating depth sensing from the F200, we enable the Mirobot to perform more complex operations like object sorting by color, shape, or location, and eventually, even higher-level tasks commanded through natural language.
+                            </p>
+
+                            <h3>2.1 Characteristics</h3>
+                            <ul>
+                                <li><b>Degrees of Freedom:</b> 6</li>
+                                <li><b>Payload:</b> ~300g (up to 400g in newer revisions)</li>
+                                <li><b>Reach:</b> Approximately 400mm</li>
+                                <li><b>Repeatability:</b> ±0.2mm</li>
+                            </ul>
+                            <p>
+                                These specifications ensure that the Mirobot can reliably pick up small objects such as colored cubes and place them at designated coordinates.
+                            </p>
+
+                            <h3>2.2 Gripper Types</h3>
+                            <p>
+                                The Mirobot supports multiple end-effectors:
+                            </p>
+                            <ul>
+                                <li><b>Three-Finger Gripper:</b> Standard mechanical gripper for most objects.</li>
+                                <li><b>Suction Cup:</b> Ideal for flat, smooth surfaces, minimizing damage to objects.</li>
+                                <li><b>Pen Holder:</b> Gentle handling of pens and pencils, useful for drawing.</li>
+                            </ul>
+
+                            <h3>2.3 Programming and Simulation</h3>
+                            <p>
+                                Wlkata Studio provides a GUI-based approach to controlling the robot. For advanced operations, we recommend leveraging Python APIs, ROS (Robot Operating System) integration, or custom inverse kinematics solutions. By working at the code level, one can integrate Computer Vision, AI-based planning, and Vision-Language Models (VLMs) that enable commands like:
+                            </p>
+                            <p class="highlight">
+                                "<i>Robot, please pick the red cube from the left corner of the table and place it next to the blue cube.</i>"
+                            </p>
+                            <p>
+                                Such a request can be parsed using a large language model, and combined with vision-based object detection and calibration, the robot can interpret and execute the task.
+                            </p>
+
+                            <div align="center" style="margin:10px;">
+                                <img src="../img/robot_cubes.jpg" width="48%" alt="Robot with Cubes" style="margin:2px;">
+                                <img src="../img/robot_empty.jpg" width="48%" alt="Robot Without Cubes" style="margin:2px;">
+                            </div>
+                            <div align="center" style="margin:20px;">
+                                <img src="../img/robot_cube.gif" width="45%" alt="Robot Manipulating Cube" style="margin:10px;">
+                                <img src="../img/robot_keyboard.gif" width="45%" alt="Robot Using Keyboard" style="margin:10px;">
+                            </div>
+
+                            <h3>2.4 Workshop Roadmap</h3>
+                            <p>
+                                In our <a href="https://united-ai.net/en/ueber-uns/">UnitedAI</a> workshop series, participants followed a roadmap from basic robot control to advanced AI-driven tasks. This included step-by-step calibration, code integration, and VLM fine-tuning to interpret and execute instructions.
+                            </p>
+                            <div align="center">
+                                <img src="../img/roadmap_robot.png" width="90%" alt="Workshop Roadmap" style="margin:20px;">
+                            </div>
+
+                            <h2>3. Calibration: A Cornerstone of Integration</h2>
+                            <p>
+                                Proper calibration ensures that what the camera "sees" can be accurately translated into real-world robot coordinates. Because the camera is placed at an angle, a simple 2D-to-2D homography is insufficient. Instead, we must perform a robust 3D calibration:
+                            </p>
+                            <ul>
+                                <li><b>Intrinsic Calibration:</b> Using a checkerboard pattern and <code>cv2.calibrateCamera()</code> in OpenCV to determine the camera's intrinsic parameters (focal length, principal point, distortion coefficients).</li>
+                                <li><b>Extrinsic Calibration (Hand-Eye Calibration):</b> Determining the transformation between the camera frame and the robot's coordinate frame. This often involves using ArUco markers or checkerboard corners placed at known 3D locations in the robot's workspace.</li>
+                            </ul>
+
+                            <h3>3.1 Using Checkerboards and ArUco Markers</h3>
+                            <p>
+                                Checkerboards are commonly employed for camera calibration due to their high contrast and geometric regularity. By placing a checkerboard at known positions and detecting its corners in the camera image, we gather correspondences between 2D image points and 3D world points. This data feeds into <code>solvePnP()</code> to estimate the camera's pose.
+                            </p>
+                            <p>
+                                Similarly, ArUco markers provide easily detectable fiducials with known geometry. By scattering a few ArUco markers around the workspace and measuring their known positions relative to the robot base, we can robustly compute the camera-to-robot transformation. This process is critical for ensuring that the robot can reach for objects with millimeter-level accuracy.
+                            </p>
+                            <div align="center" class="diagram">
+                                <img src="../img/checkerboard.png" width="70%" alt="Calibration Diagram">
+                                <p style="font-style:italic; font-size:14px;">
+                                    Figure: Calibration pipeline — The camera captures a pattern, corners are detected (2D), known 3D coordinates in the robot frame are matched, and solvePnP finds the transform.
+                                </p>
+                            </div>
+
+                            <h3>3.2 Commands and Code Snippets</h3>
+                            <p>
+                                Below is a Python snippet demonstrating how to capture frames, detect ArUco markers, and run solvePnP. This can be integrated into a broader calibration routine:
+                            </p>
+                            <div class="code-block"><pre><code>import cv2
+import numpy as np
+import pyrealsense2 as rs
+
+# Assume you already have camera_matrix, dist_coeffs from intrinsic calibration
+camera_matrix = np.load("camera_matrix.npy")
+dist_coeffs = np.load("dist_coeffs.npy")
+
+# Set up RealSense pipeline
+pipeline = rs.pipeline()
+config = rs.config()
+config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
+pipeline.start(config)
+
+# Load known robot coordinates of ArUco markers (X, Y, Z in robot frame)
+object_points = np.array([
+    [0.1, 0.05, 0.0],
+    [0.15, 0.05, 0.0],
+    [0.1, 0.1, 0.0],
+    [0.15, 0.1, 0.0]
+], dtype=np.float32)
+
+while True:
+    frames = pipeline.wait_for_frames()
+    color_frame = frames.get_color_frame()
+    if not color_frame:
+        continue
+    color_image = np.asanyarray(color_frame.get_data())
+
+    # Detect ArUco markers (assuming we've chosen a dictionary and know IDs)
+    aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
+    corners, ids, rejected = cv2.aruco.detectMarkers(color_image, aruco_dict)
+
+    if ids is not None and len(ids) == len(object_points):
+        # Sort points by ID to match known robot coordinates
+        idxs = np.argsort(ids.flatten())
+        sorted_corners = [corners[i][0] for i in idxs]
+        # Compute the centroid of each marker for simplicity
+        image_points = np.array([np.mean(corner, axis=0) for corner in sorted_corners], dtype=np.float32)
+
+        success, rvec, tvec = cv2.solvePnP(object_points, image_points, camera_matrix, dist_coeffs)
+        if success:
+            # Use R and t for transformation
+            R, _ = cv2.Rodrigues(rvec)
+            # Now R and t define your camera-to-robot frame transform
+            # Invert if necessary depending on your reference frames
+            print("Rotation:\n", R)
+            print("Translation:\n", tvec)
+            break
+
+    cv2.imshow('Calibration', color_image)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cv2.destroyAllWindows()
+pipeline.stop()
+</code></pre>
+                            </div>
+
+                            <p>
+                                After obtaining the rotation and translation vectors (<code>rvec</code>, <code>tvec</code>), you can construct a transformation matrix. This matrix allows you to map any detected object's position from camera coordinates into the robot's frame, enabling precise pick-and-place operations.
+                            </p>
+
+                            <h2>4. Vision-Language Model (VLM) Integration</h2>
+                            <p>
+                                With the calibration set and depth stream working, the next challenge is to integrate a Vision-Language Model (VLM). Advanced models—similar to those developed by Google, OpenAI, or NVIDIA—can process both textual and visual inputs, enabling natural language commands like:
+                            </p>
+                            <p class="highlight">
+                                "Sort all cubes by their color and arrange them in ascending order of red, green, and blue."
+                            </p>
+                            <p>
+                                To implement this:
+                            </p>
+                            <ul>
+                                <li><b>Pre-trained VLM:</b> Use a model such as OpenAI's CLIP, BLIP, or a fine-tuned vision-language transformer (e.g., RT-2 by Google) that can parse natural language instructions and identify the relevant objects in the scene.</li>
+                                <li><b>Object Detection:</b> Integrate a YOLO-based or Mask R-CNN-based detector trained on your cube classes, or rely on classical color segmentation if objects are distinctly colored.</li>
+                                <li><b>Planning:</b> After language parsing, the VLM provides a structured query (e.g., "Pick red cubes and move them to coordinate (0.15, 0.05)"). Your code uses the camera-to-robot transform to map detected cube positions to robot coordinates, then issues Mirobot commands to move accordingly.</li>
+                            </ul>
+                            <div align="center" class="diagram">
+                                <img src="../img/robot_vlm_diagram.jpg" width="95%" alt="VLM Diagram">
+                                <p style="font-style:italic; font-size:14px;">
+                                    Figure: VLM pipeline — The camera captures an image, cubes are detected, known 3D coordinates in the robot frame are matched, and user prompt is passed to the VLM together with coordinates and an image.
+                                </p>
+                            </div>
+
+                            <h2>5. References</h2>
+                            <ul>
+                                <li>Intel RealSense Legacy Documentation: <i>Archived Intel resources</i></li>
+                                <li>OpenCV Calibration Tutorial: <i>https://docs.opencv.org/</i></li>
+                                <li>Wlkata Mirobot Official Documentation: <i>https://www.wlkata.com/</i></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

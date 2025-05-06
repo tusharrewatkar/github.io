@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics Projects</title>
+    <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+    <link rel="icon" type="image/png" href="../img/robotics.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Raleway', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #0f0f0f;
+            color: #ffffff;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            color: #ffffff;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 24px;
+            color: #2470ce;
+            font-weight: 600;
+        }
+        
+        h4 {
+            font-size: 20px;
+            font-weight: 500;
+        }
+        
+        p, ul, ol {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+        
+        a {
+            color: #2470ce;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        a:hover {
+            color: #3a8be0;
+            text-decoration: underline;
+        }
+
+        .code-block {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            text-align: left;
+            border-radius: 5px;
+            color: #e0e0e0;
+        }
+
+        img, video {
+            border-radius: 8px;
+            margin: 15px 0;
+            max-width: 100%;
+            border: 1px solid #333;
+        }
+
+        .code {
+            font-family: Consolas,"courier new";
+            color: #e83e8c;
+            background-color: #2a2a2a;
+            padding: 2px 5px;
+            font-size: 90%;
+            border-radius: 3px;
+        }
+        
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        pre {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        /* Override Prism styles to match our dark theme */
+        code[class*="language-"], pre[class*="language-"] {
+            background: #2a2a2a;
+            color: #e0e0e0;
+        }
+        
+        .navigation {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .navigation a {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: #2470ce;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .navigation a:hover {
+            color: #3a8be0;
+        }
+        
+        table {
+            margin: 0 auto;
+            max-width: 1100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navigation">
+        <a href="../index.html">
+            <span style="margin-right: 8px;">&#8592;</span>Back to Home
+        </a>
+    </div>
+    
+    <table width="900" border="0" align="center" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <!-- Jetbot Project -->
+                            <h1 id="jetbot">NVIDIA Jetbot Gesture Recognition</h1>
+                            <p>
+                                The <a href="https://jetbot.org/master/" target="_blank">Jetbot</a> is an open-source robot platform powered by the NVIDIA Jetson Nano. This project focuses on enabling the Jetbot to recognize gestures and respond with corresponding actions, combining cutting-edge machine learning and robotics techniques.
+                            </p>
+
+                            <h2>Project Overview</h2>
+                            <p>
+                                The goal of this project was to implement a scalable gesture recognition system that allows the Jetbot to classify specific hand gestures and execute predefined actions. Additional functionalities such as collision avoidance and object tracking were integrated for robust real-world operation. A detailed presentation can be found <a href="https://www.canva.com/design/DAFmOXtyisY/ai55aSjFnVO90tTON6ZBCg/view" target="_blank">here</a>.
+                            </p>
+
+                            <h3>Project Features</h3>
+                            <ul>
+                                <li><b>Gestures Recognition:</b> Classify specific gestures and trigger actions.</li>
+                                <li><b>Collision Avoidance:</b> Detect and navigate around obstacles.</li>
+                                <li><b>Object Tracking:</b> Identify and follow selected objects.</li>
+                                <li><b>General Logic:</b> Integrate gesture recognition and collision avoidance into a cohesive control strategy.</li>
+                            </ul>
+
+                            <h3>Implementation Process</h3>
+                            <ul>
+                                <li>Model optimization using ResNet to reduce size and retain accuracy.</li>
+                                <li>Obstacle avoidance using data augmentation and real-world testing.</li>
+                                <li>Utilized Docker to streamline deployment and system reproducibility.</li>
+                                <li>Initial tests with OpenCV were replaced with more accurate transfer learning approaches.</li>
+                            </ul>
+
+                            <h2>Key Functionalities</h2>
+                            <h3>Collision Avoidance</h3>
+                            <p>
+                                Collision avoidance was achieved by training a ResNet-based model on a dataset of obstacles and clear paths. Data augmentation techniques such as flips, zooms, and contrast adjustments increased robustness, allowing the Jetbot to navigate safely in dynamic environments.
+                            </p>
+                            <div style="text-align: center; margin: 20px;">
+                                <img src="/img/collision_avoidance.gif" style="width: 400px; height: 250px; border: 6px solid #ccc;" alt="Collision Avoidance">
+                            </div>
+                            <h3>Gestures Recognition</h3>
+                            <p>
+                                The robot was trained to recognize gestures such as "Go Right" and "Go in Circles." When these gestures are detected, the Jetbot executes corresponding actions.
+                            </p>
+                            <div>
+                                <div style="text-align: center; margin: 20px;">
+                                    <h4>Go Right Gesture</h4>
+                                    <img src="/img/go_left.gif" style="max-width: 100%; border: 6px solid #ccc;" alt="Go Right Gesture">
+                                </div>
+                                <div style="text-align: center; margin: 20px;">
+                                    <h4>Go Circles Gesture</h4>
+                                    <img src="/img/go_circles.gif" style="max-width: 70%; border: 6px solid #ccc;" alt="Go Circles Gesture">
+                                </div>
+                            </div>
+                            <br>
+
+                            <hr>
+
+                            <!-- Turtlebot Project -->
+                            <h1 id="turtlebot">TurtleBot Maze Solver</h1>
+                            <p>
+                                The <a href="https://www.turtlebot.com/turtlebot3/" target="_blank">TurtleBot</a> is a ROS-based mobile robot. This project aimed to create a robust solution for navigating mazes using ROS2, laser distance sensors (LDS), odometry, and efficient navigation algorithms.
+                            </p>
+
+                            <h2>Project Overview</h2>
+
+                            <div style="text-align: center; margin: 20px;">
+                                <img src="/img/challenge4.gif" width="22.3%" alt="LDS Scanning Directions">
+                                <img src="/img/turtlebot.gif" width="70.25%" alt="LDS Scanning Directions">
+                                <p style="font-style:italic; font-size:14px;">Figure 1: Initial 2x2 maze solving (left) and more advanced methods in 3x3 maze (right).</p>
+                            </div>
+
+                            <h3>Setup Guide</h3>
+                            <p>
+                                This report provides a comprehensive walkthrough for setting up the environment necessary to execute the TurtleBot maze environments. It includes instructions for both simulation and real-world scenarios, ensuring that we have all the required dependencies and configurations in place.
+                            </p>
+
+                            <h3>Getting Started</h3>
+                            <h5>1. Prerequisites</h5>
+                            <ul>
+                                <li>Docker installed and configured</li>
+                                <li>ROS2 Humble or Rolling distribution</li>
+                                <li>Python 3.8 or newer</li>
+                                <li>Access to a compatible TurtleBot3 robot or simulation environment</li>
+                            </ul>
+
+                            <h5>2. Install Docker and Prepare Volume</h5>
+                            <pre class="code-block language-python">
+<code># Create a volume for Docker container
+docker volume create home
+# Start Docker daemon (if not already running)
+sudo service docker start</code></pre>
+
+                            <h4>Setting Up the Docker Container</h4>
+                            <p>
+                                The provided Docker container is pre-configured with all necessary dependencies. To run the container:
+                            </p>
+                            <pre class="code-block language-python">
+<code># Allow X11 forwarding for GUI
+xhost +local:
+
+# Create the Docker container
+docker create \
+    -it -e "DISPLAY=:0" \
+    --mount type=bind,src=/tmp/.X11-unix,dst=/tmp/.X11-unix --device=/dev/dri:/dev/dri \
+    --mount source=home,target=/home/u \
+    --name ros --hostname ros \
+    registry.gitlab.com/goekce/turtlebot3-challenges \
+    /usr/bin/tmux
+
+# Start the container
+docker start -i ros
+
+# Pull the latest container image
+docker pull registry.gitlab.com/goekce/turtlebot3-challenges</code></pre>
+
+                            <h4>Setting Up the ROS Environment</h4>
+                            <pre class="code-block language-python">
+<code># Load ROS environment variables
+. /opt/ros/rolling/setup.sh
+
+# Run the simulation environment
+cd turtlebot3-challenges
+./play world_1_1.sdf</code></pre>
+
+                            <h4>Running the Challenges</h4>
+                            <h5>1. Challenge Execution</h5>
+                            <p>
+                                Execute the desired challenge by running the corresponding Python script. For example:
+                            </p>
+                            <pre class="code-block language-python">
+<code># Run Challenge 1
+python c1.py
+# Run Challenge 4
+python c4.py</code></pre>
+
+                            <h5>2. Adjusting Goals for Larger Mazes</h5>
+                            <p>
+                                For larger mazes, manually configure the <code class="code">self.goal_tile</code> variable to reflect the correct goal coordinates, typically <code class="code">(maze_width-1, maze_height-1)</code>.
+                            </p>
+                            <br>
+
+                            <h4>Troubleshooting and Tips</h4>
+                            <ul>
+                                <li><b>Simulation Restart:</b> Use <code class="code">CTRL+r</code> in Gazebo to restart the simulation without closing the application.</li>
+                                <li><b>Stopping Processes:</b> Terminate running processes with <code class="code">CTRL+c</code>.</li>
+                                <li><b>Changing Gazebo Port:</b> Resolve port conflicts with:
+                                    <pre class="code-block language-python"><code class="code">GAZEBO_MASTER_URI=:12346 gazebo --verbose WORLD.sdf</code></pre>
+                                </li>
+                                <li><b>Monitoring Resources:</b> Use <code class="code">htop</code> to check CPU and memory usage.</li>
+                            </ul>
+                            <br>
+
+                            <h4>Continuous Integration and Deployment (CI/CD)</h4>
+                            <p>
+                                For deployment we used CI/CD tools like GitLab pipelines. The provided Docker container is compatible with GitLab CI/CD configurations for seamless integration.
+                            </p>
+
+
+                            <h2>Project Challenges</h2>
+                            <p>The project was divided into several progressively challenging tasks:</p>
+
+                            <h3>Challenge 1: Laser Distance Sensor (LDS)</h3>
+                            <p>
+                                The primary goal was to calculate the minimum distance to walls using the LDS. The noisy sensor data was mitigated using averaging techniques. This step established the foundation for wall detection and proximity sensing.
+                            </p>
+                            <br>
+                            <div class="code-description">Code snippet for processing LDS data:</div>
+                            <pre class="code-block language-python">
+<code>def scan_callback(self, msg):
+    directions = {
+        '⬆️': msg.ranges[0],
+        '⬇️': msg.ranges[180],
+        '⬅️': msg.ranges[90],
+        '➡️': msg.ranges[-90],
+    }
+
+    valid_distances = [dist for dist in directions.values() if dist != float('inf')]
+    if valid_distances:
+        min_distance = min(valid_distances)
+        self.get_logger().info(f"Minimum distance to walls: {min_distance}")
+    </code></pre>
+                            <div  style="text-align: center; margin: 20px;">
+                                <img src="/img/lsd_sensor_0.jpeg" width="50%" alt="LDS Scanning Directions" style="margin:10px;">
+                                <img src="/img/lsd_sensor_00.jpeg" width="40%" alt="LDS Scanning Directions" style="margin:10px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 1: Initial objects in the scene (left) and goal description (right) for the first steps.</p>
+                            </div>
+
+                            <h3>Velocity Control</h3>
+                            <p>
+                                Building upon the foundation laid previously, we choose the 1 x 1 meter maze setting. The principal task in this challenge was to navigate the robot to a wall without collision. Furthermore, additional requirements necessitated the implementation of smooth acceleration and deceleration to facilitate seamless motion control.
+                            </p>
+                            <br>
+                            <p>
+                                We implemented the subscription to the LIDAR sensors data and the publisher to change the Velocity of the robot's wheels. Using this, it was simple to write a program that checked the distance to the front wall and calculated its speed based on this distance. If the distance was greater than 0.3m, it would accelerate and then decelerate as soon as it crossed that boundary. We made sure to include a minimum speed that was reasonable, so that the robot would eventually reach its destination and not slow down to almost 0 before it got there. I also made sure to include a safety distance to the wall, as the LIDAR is around 8cm back from the front of the robot, and if you don't account for this, the robot will never stop, since the LIDAR never returns a distance of 0.
+                            </p>
+                            <br>
+
+                            <h4>Objectives</h4>
+                            <ul>
+                                <li>Use the Laser Distance Sensor (LDS) to measure the distance between the robot and obstacles in its path.</li>
+                                <li>Implement proportional control for velocity adjustment based on the distance to the obstacle.</li>
+                                <li>Ensure the robot decelerates smoothly as it approaches the wall and comes to a complete stop at a safe distance.</li>
+                                <li>Handle sensor noise effectively to maintain robust and accurate performance.</li>
+                            </ul>
+
+                            <h4>Approach</h4>
+                            <p>
+                                We utilized ROS2 nodes to process sensor data and control the robot's motion. The robot was required to adjust its speed dynamically based on the distance to the obstacle, ensuring smooth acceleration and deceleration.
+                            </p>
+
+                            <h5>1. Laser Distance Sensor (LDS) Data Processing</h5>
+                            <p>
+                                The LDS provides an array of distances in a 360° sweep around the robot. For this challenge, only the distance directly in front of the robot was relevant. To handle sensor noise, multiple readings were averaged using a moving window technique, ensuring stable and accurate measurements.
+                            </p>
+                            <br>
+                            <div class="code-description">Code snippet for processing LDS data:</div>
+                            <pre class="code-block language-python">
+<code>def scan_callback(self, msg):
+    # Extract front distance
+    front_distance = msg.ranges[0]
+
+    # Filter noisy data
+    if front_distance == float('inf') or front_distance <= 0:
+        self.get_logger().warning("Invalid sensor reading!")
+        return
+
+    # Add to moving window
+    self.distance_window.append(front_distance)
+    if len(self.distance_window) > self.window_size:
+        self.distance_window.pop(0)
+
+    # Calculate average distance
+    avg_distance = sum(self.distance_window) / len(self.distance_window)
+    self.get_logger().info(f"Averaged Distance: {avg_distance}")</code></pre>
+                            <div style="text-align: center; margin: 20px;">
+                                <img src="/img/screenshot_gazebo.png" alt="LDS Diagram" style="max-width: 80%; border: 6px solid #ccc;">
+                                <p style="font-style:italic; font-size:14px;">Figure 1: Screenshot from Gazebo simulator.</p>
+                            </div>
+
+                            <h5>2. Proportional Velocity Control</h5>
+                            <p>
+                                A proportional controller was implemented to adjust the robot's linear velocity based on the distance to the wall. The velocity was calculated using the formula:
+                            </p>
+                            <br>
+                            <p style="text-align: center; font-weight: bold;">
+                                Velocity = Proportional_Gain × (Distance - Safety_Distance)
+                            </p>
+                            <br>
+                            <p>
+                                The proportional gain ensured that the velocity was directly proportional to the distance, resulting in smooth deceleration as the robot approached the wall. A minimum velocity threshold was set to prevent the robot from stalling prematurely.
+                            </p>
+                            <br>
+                            <div class="code-description">Code snippet for proportional control:</div>
+                            <pre class="code-block language-python">
+<code>def calculate_velocity(self, distance, safety_distance=0.3):
+    # Define proportional gain
+    proportional_gain = 0.5
+    # Calculate velocity
+    velocity = proportional_gain * (distance - safety_distance)
+    # Enforce minimum velocity for smooth motion
+    return max(0.05, velocity) if distance > safety_distance else 0</code></pre>
+
+                            <h5>3. Integration with ROS2</h5>
+                            <p>
+                                The proportional velocity control logic was integrated into a ROS2 node, which subscribed to the <code class="code">/scan</code> topic for LDS data and published commands to the <code class="code">/cmd_vel</code> topic for velocity control. The following flow illustrates the interaction between components:
+                            </p>
+                            <div style="text-align: center; margin: 20px;">
+                                <img src="/img/ros_topics.gif" alt="ROS2 Node Interaction" style="max-width: 80%; border: 6px solid #ccc;">
+                                <p style="font-style:italic; font-size:14px;">Figure 2: ROS2 node interaction for velocity control and sensor data processing.</p>
+                            </div>
+
+                            <h3>Challenge 2: Precise Rotation</h3>
+                            <p>
+                                Building upon the accomplishments of Challenge 1, Challenge 2 focused on achieving precise rotational alignment. The principal objective was to enable the TurtleBot to perform an exact 90-degree counterclockwise rotation within the established maze environment. This challenge introduced the complexity of combining Laser Distance Sensor (LDS) data and odometry to ensure accuracy.
+                            </p>
+                            <br>
+                            <p>
+                                Challenge 2 benefited from leveraging a foundational template that provided basic ROS2 subscriptions for sensor data and publishers for wheel velocities. Using these, a robust algorithm was developed to calculate rotational errors and control the robot's angular velocity. The process ensured that the TurtleBot aligned precisely with the desired orientation without overshooting or undershooting.
+                            </p>
+                            <br>
+
+                            <h4>Objectives</h4>
+                            <ul>
+                                <li>Accurately rotate the TurtleBot by 90 degrees counterclockwise.</li>
+                                <li>Utilize LDS data and odometry for precise alignment and error correction.</li>
+                                <li>Implement smooth rotational control to prevent abrupt motions.</li>
+                                <li>Handle sensor noise effectively to ensure robust performance.</li>
+                            </ul>
+                            <br>
+
+                            <h4>Approach</h4>
+                            <p>
+                                Challenge 2 required a creative combination of geometric transformations and control logic to achieve precise rotation. Data from the LDS was carefully calibrated to reflect the robot's central frame of reference, while odometry tracked incremental rotational changes.
+                            </p>
+
+                            <h5>1. LDS Data Transformation</h5>
+                            <p>
+                                The LDS data, originally captured in the sensor's frame, was transformed into the robot's central frame to account for the offset of the LDS. This transformation ensured accurate and reliable distance measurements relative to the axis of rotation.
+                            </p>
+                            <br>
+                            <div class="code-description">Code snippet for LDS-to-robot frame transformation:</div>
+                            <pre class="code-block language-python">
+<code>def lds_to_robot(self, point):
+    x_lds = point[0] * math.cos(point[1])
+    y_lds = point[0] * math.sin(point[1])
+    x_robot = x_lds - 0.065  # LDS offset of 6.5 cm
+    y_robot = y_lds
+    distance_robot = math.sqrt(x_robot**2 + y_robot**2)
+    angle_robot = math.atan2(y_robot, x_robot)
+    return distance_robot, angle_robot</code></pre>
+
+                            <h5>2. Rotation Error Calculation</h5>
+                            <p>
+                                The rotational error was determined by comparing the current orientation with the target orientation. This calculation leveraged odometry data to track incremental rotational changes and normalize the error within a manageable range.
+                            </p>
+                            <br>
+                            <div class="code-description">Python snippet for rotation error calculation:</div>
+                            <pre class="code-block language-python">
+<code>def calculate_rotation_error(self, target_angle, current_angle):
+    error = target_angle - current_angle
+    return (error + math.pi) % (2 * math.pi) - math.pi  # Normalize between -π and π</code></pre>
+
+                            <h5>3. Proportional Rotation Control</h5>
+                            <p>
+                                A proportional controller was implemented to dynamically adjust angular velocity based on the rotation error. This approach ensured that the robot decelerated smoothly as it approached the target angle, resulting in precise alignment.
+                            </p>
+                            <br>
+                            <div class="code-description">Python snippet for proportional angular control:</div>
+                            <pre class="code-block language-python">
+<code>def calculate_angular_velocity(self, rotation_error):
+    proportional_gain = 1.0
+    angular_velocity = proportional_gain * rotation_error
+    return max(-1.0, min(1.0, angular_velocity))  # Clamp angular velocity</code></pre>
+
+                            <h5>4. Integration with ROS2</h5>
+                            <p>
+                                The rotational control logic was encapsulated in a ROS2 node that subscribed to odometry data and published angular velocity commands to the TurtleBot. This node continuously monitored rotation error and dynamically adjusted angular velocity for precise control.
+                            </p>
+
+                            <h3>Challenge 3: Sequential Movement</h3>
+                            <p>
+                                Building upon the previous challenges, Challenge 3 demonstrated the TurtleBot's ability to execute a sequence of precise movements and rotations. The task required the robot to move forward 15 cm, perform an exact 90-degree rotation, and move forward another 15 cm, all while maintaining high accuracy and smooth transitions.
+                            </p>
+                            <br>
+                            <p>
+                                The implementation relied on a state machine to manage sequential actions, leveraging odometry for precise tracking and control. Each action was executed with a clear target and carefully calibrated motion control, ensuring robust and repeatable performance.
+                            </p>
+                            <br>
+                            
+                            <h4>Objectives</h4>
+                            <ul>
+                                <li>Program the TurtleBot to move forward exactly 15 cm, rotate 90 degrees, and move forward another 15 cm.</li>
+                                <li>Utilize odometry data for accurate tracking of position and orientation.</li>
+                                <li>Implement a state machine to manage and coordinate the sequence of movements.</li>
+                                <li>Ensure smooth transitions between movements to maintain stability.</li>
+                            </ul>
+                            <br>
+                            
+                            <h4>Approach</h4>
+                            <p>
+                                This challenge required the integration of precise motion tracking, rotational control, and sequential logic. A modular approach was adopted to separate each movement phase, enabling efficient debugging and future adaptability.
+                            </p>
+                            
+                            <h5>1. State Machine Design</h5>
+                            <p>
+                                A state machine was implemented to orchestrate the movement sequence. The robot transitioned between the following states:
+                            </p>
+                            <ul>
+                                <li><b>MOVE_FORWARD:</b> Move forward 15 cm while tracking distance using odometry.</li>
+                                <li><b>ROTATE:</b> Perform a 90-degree clockwise rotation with odometry-based angle tracking.</li>
+                                <li><b>MOVE_FORWARD_2:</b> Move forward another 15 cm after completing the rotation.</li>
+                            </ul>
+                            
+                            <h5>2. Odometry for Accurate Tracking</h5>
+                            <p>
+                                Odometry provided real-time feedback on the robot's position and orientation. By continuously monitoring x, y, and yaw values, the robot calculated distances traveled and angles rotated with precision.
+                            </p>
+                            <br>
+                            <div class="code-description">Python snippet for distance calculation using odometry:</div>
+                            <pre class="code-block language-python">
+<code>def calculate_distance(self, start_pose, current_pose):
+    dx = current_pose.x - start_pose.x
+    dy = current_pose.y - start_pose.y
+    return math.sqrt(dx**2 + dy**2)</code></pre>
+                            
+                            <h5>3. Smooth Motion Control</h5>
+                            <p>
+                                Proportional control algorithms were applied to both linear and angular velocities to ensure smooth motion. The robot gradually reduced velocity as it approached the target position or orientation, preventing abrupt stops.
+                            </p>
+                            <br>
+                            <div class="code-description">Python snippet for smooth velocity control:</div>
+                            <pre class="code-block language-python">
+<code>def control_velocity(self, error, max_speed):
+    proportional_gain = 0.5
+    velocity = proportional_gain * error
+    return max(-max_speed, min(max_speed, velocity))  # Clamp velocity</code></pre>
+                            <div align="center">                       
+                                <video width="95%" controls>
+                                    <source src="/img/challenge1.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p style="font-style: italic; font-size: 14px;">Figure 1: Gazebo simulated velocity control.</p>
+                            </div>
+                            
+                            <h5>4. Integration with ROS2</h5>
+                            <p>
+                                The control logic was implemented in a ROS2 node that subscribed to odometry data and published velocity commands. The state machine logic ensured modularity, with each state triggering specific commands to achieve its respective goal.
+                            </p>
+                            
+                            <h3>Challenge 4: Maze Navigation</h3>
+                            <p>
+                                Here we marked a significant progression in the TurtleBot's capabilities, involving navigation through increasingly complex mazes. First, the robot navigated a 2x2 maze, and then we extended this to a 3x3 maze. These challenges required advanced techniques in mapping, pathfinding, and odometry correction to ensure accurate and efficient traversal of the maze environments.
+                            </p>
+                            <br>
+                            
+                            <h4>Objectives</h4>
+                            <ul>
+                                <li>Navigate a 2x2 and a 3x3 maze from the bottom-left corner to the top-right corner.</li>
+                                <li>Develop a dynamic wall detection system using the Laser Distance Sensor (LDS).</li>
+                                <li>Implement the A* search algorithm for optimal pathfinding within the maze.</li>
+                                <li>Correct odometry drift for precise positioning and navigation.</li>
+                            </ul>
+                            <br>
+                            
+                            <h4>Approach</h4>
+                            <p>
+                                The challenges combined perception, planning, and control into a cohesive navigation framework. The robot dynamically updated its internal map, calculated optimal paths using A*, and executed precise movements to traverse the maze step-by-step.
+                            </p>
+                            
+                            <h5>1. Wall Detection and Mapping</h5>
+                            <p>
+                                The LDS was used to detect and map walls around the robot dynamically. Each cell in the maze was represented as a grid, and obstacles were marked based on sensor readings. This mapping approach included:
+                            </p>
+                            <ul>
+                                <li><b>World Transformation:</b> Converting LDS readings into world coordinates relative to the robot.</li>
+                                <li><b>Grid Representation:</b> Mapping world coordinates to grid cells for easy pathfinding.</li>
+                                <li><b>Obstacle Marking:</b> Dynamically identifying and marking walls in the grid.
+                            </ul>
+                            <br>
+                            <p>                            
+                                In this task, the aim is to navigate the robot from the lower-left extremity to the upper-right extremity of a maze by leveraging data from both the odometer and the laser distance sensor. The methodology commences with the initialization of the maze dimensions, setting the starting point and the target destination within the grid. <br><br>The `world_size` parameter delineates the overall dimensions of the maze in meters, while the `cell_size` defines the spatial extent of each individual cell within this maze in meters. The matrix `self.grid` is initially populated with zeros, symbolizing an absence of obstacle knowledge at the outset, with the robot being aware solely of the maze's dimensions.
+                            </p>
+                            <pre class="code-block language-python">
+<code>def map_walls(self, lds_readings):
+    for angle, distance in lds_readings.items():
+        if distance < self.max_sensor_range:
+            x_world = self.robot_x + distance * math.cos(angle)
+            y_world = self.robot_y + distance * math.sin(angle)
+            grid_x, grid_y = self.world_to_grid(x_world, y_world)
+            self.grid[grid_x][grid_y] = 1  # Mark as occupied</code></pre>
+                            <div  style="text-align: center; margin: 20px;">
+                                <img src="/img/lsd_4.jpeg" width="40%" alt="LDS Scanning Directions" style="margin:10px;">
+                                <img src="/img/lsd_44.jpeg" width="40%" alt="LDS Scanning Directions" style="margin:10px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 2: initialised grids in zeros (left) and the range of the LDS sensor while the robot is in its initial position (right) of a maze world in the form of 2 x 2 meters.</p>
+                            </div>
+
+                            <p>                            
+                                With this setup, the robot gains awareness of its spatial context within the maze and its ultimate objective. Utilizing the laser distance sensor, the robot identifies wall locations, translating these detections from the LDS frame to the robot's frame, then to the world frame, and ultimately into grid coordinates. These transformations facilitate the subsequent updating of the maze's grid map, marking cells as occupied based on the sensor data.
+                            </p>
+                            <br>
+
+                            <p>                            
+                                As the robot detects the walls, it will be consider as "1". Upon refreshing the grid map with obstacle information, the robot employs the A* search algorithm to ascertain a viable path to the target. This algorithm is designed to identify the most efficient route, avoiding occupied cells based on the updated grid information. The presence of an obstacle in a cell disqualifies it from being part of the calculated path. After the process from above then it will mark the grids that is occupied or blocked as 1 in the grid matrix.
+                            </p>
+
+                            <div  style="text-align: center; margin: 20px;">
+                                <img src="/img/lsd_14.jpeg" width="40%" alt="LDS Scanning Directions" style="margin:10px;">
+                                <img src="/img/lsd_144.jpeg" width="40%" alt="LDS Scanning Directions" style="margin:10px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 3: detecting walls in various directions (left) and identifying blocked paths in the grid (right) of a maze world in the form of 2 x 2 meters.</p>
+                            </div>
+
+                            <p>                            
+                                Upon identifying a viable pathway, the robot engages its control systems to traverse the established route. This process involves utilizing data from the Laser Distance Sensor (LDS) to continuously ascertain the presence of any newly detected barriers, especially after reaching the end of the path but before arriving at the goal. Additionally, it employs odometric information to maintain awareness of its positional and orientational status. The implementation of this methodological approach is anticipated to facilitate the robot's successful navigation to the predetermined target location within the labyrinthine environment.
+                            </p>
+                            <br>
+
+                            <p>                            
+                                Voila! This image show how the robot should drive towards its end goal and stop:
+                            </p>
+
+                            <div  style="text-align: center; margin: 20px;">
+                                <img src="/img/lsd_24.jpeg" width="40%" alt="LDS Scanning Directions" style="margin:10px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 4: Predicted path in a maze world in the form of 2 x 2 meters.</p>
+                            </div>
+
+                            <p>                            
+                                The second strategy for this challenge involves utilizing odometer data for the robot to ascertain its position and orientation for navigation. Concurrently, data from the laser distance sensor will be employed to detect obstacles, such as walls.
+                            </p>
+                            <br>
+
+                            <p>                            
+                                Upon determining the distance between the robot and a wall that impedes its trajectory towards the goal, should the laser distance sensor register a distance less than 1.73 meters at an approximate angle of 30 degrees to the right, the robot will ascertain the presence of a wall. In such an instance, the robot will deduce that it must adopt the lower route, which entails rotating right, advancing straight, rotating left, and then proceeding straight towards its destination. Should the lower route be obstructed, the robot will then resort to the upper route, characterized by moving straight, executing a right rotation, and continuing in a straight line until it reaches its objective.
+                            </p>
+                            <br>
+
+                            <p>                            
+                                This approach will only work if the world is a 2 x 2 meters maze. It is a simpler approach to solve this challenge.
+                            </p>
+                            <br>
+
+                            
+
+                            <h5>2. Wall Detection and Mapping for 3x3 maze</h5>
+
+                            <p>                            
+                                The figure below shows one of the 3 x 3 meters maze world with the robot finding it's path to the goal state. We use the same approach as before, as it is dynamic.
+                                The robot's LDS sensor is able to detect the wall and the range of the LDS sensor is noted in green spacing. The red marking shows the grid matrix values. The blue marking shows the where the walls are detected in each grid cell. At the end, it will drive and arrive at its goal.
+                            </p>
+                            <br>
+
+                            <div  style="text-align: center; margin: 20px;">
+                                <img src="/img/lsd_34.jpeg" width="24%" alt="LDS Scanning Directions">
+                                <img src="/img/lsd_344.jpeg" width="24.5%" alt="LDS Scanning Directions">
+                                <img src="/img/lsd_3444.jpeg" width="23.95%" alt="LDS Scanning Directions">
+                                <img src="/img/lsd_34444.jpeg" width="24.05%" alt="LDS Scanning Directions">
+                                <p style="font-style:italic; font-size:14px;">Figure 5: initial position (left), identifying blocked paths in the grid (center), and final trajectory (right) in the 3 x 3 meters maze.</p>
+                            </div>
+                            
+                            <h5>3. Pathfinding with A* Algorithm</h5>
+                            <p>
+                                The A* search algorithm provided an optimal path to navigate from the starting position to the goal. The algorithm utilized a heuristic (Manhattan distance) to efficiently balance exploration and exploitation. The pathfinding process included:
+                            </p>
+                            <ul>
+                                <li><b>Open List:</b> Prioritized nodes to explore based on cost.</li>
+                                <li><b>Closed List:</b> Nodes that were already evaluated.</li>
+                                <li><b>Cost Calculation:</b> Combining movement cost (g) and heuristic (h) to determine priority.
+                            </ul>
+                            <br>
+                            <div class="code-description">Python snippet for A* pathfinding:</div>
+                            <pre class="code-block language-python">
+<code>def a_star_search(self, start, goal):
+    open_list = PriorityQueue()
+    open_list.put((0, start))
+    came_from = {}
+    cost_so_far = {start: 0}
+
+    while not open_list.empty():
+        current = open_list.get()[1]
+
+        if current == goal:
+            break
+
+        for neighbor in self.get_neighbors(current):
+            new_cost = cost_so_far[current] + self.get_cost(current, neighbor)
+            if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
+                cost_so_far[neighbor] = new_cost
+                priority = new_cost + self.heuristic(neighbor, goal)
+                open_list.put((priority, neighbor))
+                came_from[neighbor] = current
+    return self.reconstruct_path(came_from, start, goal)</code></pre>
+                            <div style="text-align: center; margin: 20px;">
+                                <img src="/img/astar.gif" alt="A* Pathfinding Visualization" style="max-width: 80%; border: 6px solid #ccc;">
+                                <p style="font-style:italic; font-size:14px;">Figure 2: Visualization of A* search algorithm used to solve a maze.</p>
+                            </div>
+                            
+                            <h5>3. Sequential Navigation and Correction</h5>
+                            <p>
+                                After computing the optimal path, the robot executed each step sequentially. Periodic corrections, such as wall alignment, ensured that odometry drift did not compromise navigation accuracy. Key components included:
+                            </p>
+                            <ul>
+                                <li><b>Wall Alignment:</b> Correcting orientation by aligning LDS readings with detected walls.</li>
+                                <li><b>State Machine:</b> Managing movement states like move forward, rotate, and correct drift.</li>
+                            </ul>
+                            <div style="text-align: center; margin: 20px;">
+                                <img src="/img/challenge4_diagram.png" alt="State Machine for Maze Navigation" style="max-width: 80%; border: 6px solid #ccc;">
+                                <p style="font-style:italic; font-size:14px;">Figure 3: State machine for sequential navigation in a maze.</p>
+                            </div>
+                            <hr>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+/* Styling for Research Table */
+.research-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin: 20px 0;
+}
+
+.research-table caption {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: left;
+    color: #333;
+}
+
+.research-table thead th {
+    background-color: #f2f2f2;
+    color: #333;
+    text-align: left;
+    padding: 10px;
+    border-bottom: 2px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.research-table thead th:last-child {
+    border-right: none;
+}
+
+.research-table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    color: #555;
+}
+
+.research-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.research-table tbody td:last-child {
+    border-right: none;
+}
+
+.research-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.research-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.research-table {
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

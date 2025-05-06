@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>B-Plus Co-op: Label Error Detection - Ivan Smirnov</title>
+    <meta name="author" content="Ivan Smirnov">
+    <meta name="viewport" content="width=1100">
+    <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+    <link rel="icon" type="image/png" href="../img/logo-rocket.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #0f0f0f;
+            color: #ffffff;
+        }
+
+        img, video {
+            border-radius: 2px;
+            margin: 10px 0;
+        }
+
+        .image-container, .video-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        h1, h2, h3, h4, h5 {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        h3 {
+            color: #2470ce;
+        }
+
+        p, ul, ol {
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 40px;
+        }
+
+        a {
+            color: #2470ce;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table width="900" border="0" align="center" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="100%" valign="left">
+                            <h1>B-Plus Co-op: Labels Error Detection for Autonomous Driving</h1>
+                            <p>
+                                This project is a collaboration with <a href="https://www.b-plus.com/en/home" target="_blank">B-Plus</a>, focusing on detecting label errors in autonomous driving scenarios using deep learning models. We utilized proprietary B-Plus data, along with <b>BDD100k</b>, <b>KITTI</b>, and <b>CARLA</b> simulated datasets to train a model that flags erroneous labels in driving images.
+                            </p>
+                            
+                            <h2>Project Overview</h2>
+                            <p>
+                                The goal is to improve the accuracy of autonomous driving systems by identifying incorrect labels in large-scale driving datasets. The model takes an image and its labels, and outputs a binary indicator: <b>1</b> for erroneous labels and <b>0</b> for correct labels. A custom loss function, <b>Error Prone Labels (EPL)</b> and <b>Error Free Labels (EFL)</b>, was implemented to optimize this prediction process.
+                            </p>
+                            <div class="image-container">
+                                <img src="../img/bplus_loss_method.png" width="100%" alt="Autonomous Driving Image">
+                            </div>
+                            <p>
+                                <b>Training Time:</b> Approximately 1.5 hours per epoch using a GPU.
+                                <br><br>
+                            </p>
+
+                            <p>
+                                Additionally, we experimented with <a href="https://cleanlab.ai/" target="_blank">CleanLab</a>, an open-source tool for label error detection, but it performed poorly in detecting errors within the complex autonomous driving datasets.
+                            </p>
+                            
+                            <h3>Technologies Used:</h3>
+                            <ul>
+                                <li>Python, TensorFlow, PyTorch for model development</li>
+                                <li>BDD100k, KITTI, and CARLA datasets</li>
+                                <li>CARLA Simulator for synthetic dataset generation</li>
+                                <li>Custom loss functions: EPL and EFL</li>
+                            </ul>
+
+                            <h2>CARLA Simulator</h2>
+                            <p>
+                                We utilized the <a href="https://carla.org/" target="_blank">CARLA Simulator</a> for generating realistic autonomous driving scenarios. The simulator provides a controlled environment where we can introduce and analyze label errors.
+                            </p>
+                            <br>
+                            <div class="image-container">
+                                <img src="../img/carla2.png" width="33%" alt="CARLA Image 1">
+                                <img src="../img/carla1.png" width="33%" alt="CARLA Image 2">
+                                <img src="../img/carla3.png" width="33%" alt="CARLA Image 3">
+                            </div>
+                            <div class="image-container">
+                                <img src="../img/carla_vid.gif" width="100%" alt="CARLA Simulator Video">
+                                <p>Figure: CARLA simulator running autonomous driving scenarios.</p>
+                            </div>
+
+                            <h2>Error Introduction</h2>
+                            <p>
+                                Manual and automated label errors were introduced in both the proprietary B-Plus data and CARLA-generated datasets. These errors simulate real-world mislabeling issues, such as incorrect bounding boxes or object misclassifications.
+                            </p>
+                            <div class="image-container">
+                                <img src="../img/error_intro1.png" width="45%" alt="Error Introduction Image 1">
+                                <img src="../img/error_intro2.png" width="53%" alt="Error Introduction Image 2">
+                            </div>
+
+                            <h2>Training and Model Performance</h2>
+                            <p>
+                                The model was trained on a mixture of B-Plus, BDD100k, KITTI, and CARLA datasets. Below is the learning curve demonstrating the reduction of error during training. The model showed promising results in identifying label errors across various datasets, significantly improving the robustness of the autonomous driving system.
+                            </p>
+                            <div class="image-container">
+                                <img src="../img/learning_curve.png" width="80%" alt="Learning Curve">
+                            </div>
+                            
+                            <h3>Results on KITTI Dataset</h3>
+                            <p>
+                                The model was tested on the <b>KITTI dataset</b>, where it effectively identified erroneous labels. Below is an example of the model's predictions on a KITTI test set, where red boxes indicate predicted errors and green boxes indicate correct labels.
+                            </p>
+                            <br>
+                            <div class="image-container" style="display: flex; justify-content: center; align-items: center;">
+                                <img src="../img/nn_results.png" width="40%" alt="Results on KITTI Dataset">
+                                <img src="../img/iou_results.png" width="49%" alt="Results on KITTI Dataset">
+                            </div>
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>

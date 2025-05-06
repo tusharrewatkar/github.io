@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Board Games RAG - Ivan Smirnov</title>
+    <meta name="author" content="Ivan Smirnov">
+    <meta name="viewport" content="width=1100">
+    <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+    <link rel="icon" type="image/png" href="../img/logo-rocket.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #0f0f0f;
+            color: #ffffff;
+        }
+
+        h1, h2, h3, h4, h5 {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        h3 {
+            color: #2470ce;
+        }
+
+        p, ul, ol {
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 40px;
+        }
+
+        a {
+            color: #2470ce;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .image-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        img {
+            border-radius: 2px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table width="900" border="0" align="center" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="100%" valign="left">
+                            <h1>Board Games RAG System</h1>
+                            <p>
+                                This project demonstrates the creation of a Retrieval-Augmented Generation (RAG) system using a dataset of popular board games such as <b>Monopoly</b>, <b>Battleship</b>, <b>Ticket to Ride</b>, <b>Codenames</b>, and <b>Exploding Kittens</b>. The goal was to analyze, embed, and generate semantic responses to questions about game rules using state-of-the-art machine learning techniques.
+                            </p>
+                            <h2>Project Overview</h2>
+                            <p>
+                                The system integrates advanced models such as <b>SentenceTransformer</b> for embedding the rule texts of different board games, followed by dimensionality reduction and clustering using <b>UMAP</b> and <b>K-means</b>. <b>KeyBERT</b> was employed to extract important keywords, while language models like <b>Mistral-7b</b> and <b>Gemma-7b-it</b> were integrated to generate relevant responses based on user queries.
+                            </p>
+
+                            <h3>Technologies Used:</h3>
+                            <ul>
+                                <li>RAG (Retrieval-Augmented Generation)</li>
+                                <li><a href="https://huggingface.co/">Hugging Face Transformers</a> for text embeddings</li>
+                                <li>UMAP for dimensionality reduction and 2D visualizations</li>
+                                <li>K-means clustering for semantic structuring</li>
+                                <li>KeyBERT for keyword extraction and analysis</li>
+                                <li>Mistral-7b and Gemma-7b-it for question-answering</li>
+                            </ul>
+
+                            <h2>UMAP Visualization</h2>
+                            <p>
+                                After cleaning and pre-processing the rule texts, I split the content into sentences and chunked them into groups. Using <b>SentenceTransformer</b> embeddings, I applied <b>UMAP</b> to reduce the dimensionality of the high-dimensional embeddings and visualize them in a 2D space. This enabled clear representation of the semantic structure across different board game rules.
+                            </p>
+                            <div class="image-container">
+                                <img src="../img/umap_embeddings.png" width="100%" alt="UMAP visualization of board game embeddings">
+                            </div>
+
+                            <h2>Clustering and Keyword Extraction</h2>
+                            <p>
+                                I applied <b>K-means clustering</b> to group the board game rule embeddings, and used <b>KeyBERT</b> to extract representative keywords from each cluster. The clusters and extracted keywords provided insight into the various components of each game's rules.
+                            </p>
+                            <div class="image-container" style="margin-top: 15px;">
+                                <img src="../img/wordcloud.png" width="100%" alt="Keyword clusters and wordclouds">
+                            </div>
+
+                            <h2>Language Model Integration</h2>
+                            <p>
+                                For generating accurate answers to user queries about the game rules, I integrated the <b>Mistral-7b</b> model from <b>GPT4ALL</b> and <b>Gemma-7b-it</b> from <b>Hugging Face</b>. The models were fine-tuned to perform question-answering (QA) tasks specifically tailored to board game rules.
+                            </p>
+
+                            <h3>Example Responses</h3>
+                            <ul>
+                                <li><b>Query:</b> How many agent cards are there for each team in Codenames?</li>
+                                <li><b>Model's Answer:</b> There are 8 red agent cards and 8 blue agent cards for each team.</li>
+                                <li><b>Truth:</b> There are 8 red agent cards and 8 blue agent cards.</li>
+                            </ul>
+                            <br>
+                            <ul>
+                                <li><b>Query:</b> What does a Defuse Card do when you draw an Exploding Kitten?</li>
+                                <li><b>Model's Answer:</b> A Defuse Card allows you to reinsert an Exploding Kitten back into the Draw Pile in secret, instead of dying.</li>
+                                <li><b>Truth:</b> A Defuse Card prevents you from exploding by allowing you to place the Exploding Kitten back into the draw pile anywhere you'd like.</li>
+                            </ul>
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>

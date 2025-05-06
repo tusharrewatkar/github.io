@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Mine Detection with Drones - UnitedAI</title>
+    <meta name="author" content="Your Name">
+    <meta name="viewport" content="width=1100">
+    <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+    <link rel="icon" type="image/png" href="../img/logo-rocket.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #0f0f0f;
+            color: #ffffff;
+        }
+
+        img, video {
+            border-radius: 2px;
+            margin: 10px 0;
+        }
+
+        .image-container, .video-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        h1, h2, h3, h4, h5 {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        p, ul, ol {
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 40px;
+        }
+
+        code {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            padding: 3px 5px;
+            border-radius: 3px;
+        }
+
+        .diagram {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .diagram img {
+            border: 1px solid #444;
+            padding: 10px;
+            background: #1a1a1a;
+        }
+
+        .highlight {
+            background: #1e3a5f;
+            border-left: 5px solid #2196F3;
+            padding: 10px;
+            margin: 20px 0;
+        }
+
+        .code-block {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        a {
+            color: #2470ce;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <table width="900" border="0" align="center" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="100%" valign="top">
+                            <h1>Remote Sensing with Drones and AI for Landmine Detection</h1>
+                            <p>
+                                The ongoing conflict in Ukraine highlights the dire need for efficient and safe landmine detection methods. This research explores the use of drones equipped with RGB cameras, multispectral sensors, and ground penetration radar (GPR) to detect landmines. Custom datasets were created using 3D-printed and simulated mines to train machine learning models, particularly YOLO v5 and convolutional autoencoders. While the RGB-based approach showed promise for surface mines, GPR remains essential for buried mines. Additionally, a novel probing technique using simulated robotics in MuJoCo is introduced to enhance subsurface detection. The integration of advanced imaging, AI, and robotic simulations holds transformative potential for landmine detection, improving safety, accuracy, and scalability. This study evaluates the effectiveness of individual technologies and proposes a comprehensive framework for future advancements.
+                            </p>
+
+                            <h2>1. Introduction</h2>
+                            <p>
+                                Landmines pose significant threats long after conflicts end, causing injuries, fatalities, and hindering the use of land for agriculture and development. These hidden dangers necessitate innovative solutions for detection and removal. Traditional detection methods, such as manual searches and metal detectors, face critical limitations, particularly with non-metallic mines. This research explores a modern approach combining drones equipped with advanced sensors, artificial intelligence, and robotic simulations to detect landmines efficiently and safely. Drones offer unique advantages, such as their ability to access hazardous areas without risking human lives, and their adaptability to various terrains and operational conditions. This study specifically focuses on four methodologies: RGB imaging, multispectral sensors, GPR, and robotic probing simulation, each offering distinct capabilities and challenges.
+                            </p>
+
+                            <h2>2. Related Work</h2>
+                            <p>
+                                Advancements in drone technology and machine learning have catalyzed significant progress in landmine detection. Multispectral imaging, coupled with CNNs, has demonstrated high accuracy in surface-level mine detection. For example, studies leveraging YOLO-based architectures have achieved real-time detection capabilities for small objects, while other research highlights the potential of GPR in locating buried mines using anomaly detection frameworks. Probing techniques using robotic systems are a newer addition, leveraging sensors and machine learning to enhance subsurface detection. This study builds upon prior work by integrating multiple sensing techniques and robotic simulations, enhancing the robustness and applicability of the detection system.
+                            </p>
+
+                            <h2>3. Methodology</h2>
+                            <h3>3.1 Data Acquisition</h3>
+                            <p>
+                                To ensure realistic testing conditions, simulated mines, including TM-62, PFM-1, OZM, and PMN-2 types, were constructed using 3D printing and materials mimicking real mines' physical and dielectric properties. These replicas were strategically deployed in controlled environments, such as open fields and vegetated areas, to simulate various scenarios. Data collection was conducted using DJI Mavic 2 Pro and Parrot Bluegrass drones, capturing imagery at multiple altitudes (e.g., 10m, 20m, and 50m) and under varying lighting and weather conditions to create a comprehensive dataset.
+                            </p>
+                            <div class="image-container" align="center">
+                                <img src="/img/rgb_labels.jpg" width="80%" alt="RGB-labeled dataset example" style="margin:20px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 1: Example of RGB-labeled mine detection dataset.</p>
+                            </div>
+
+                            <h3>3.2 Sensor Modalities</h3>
+                            <p><b>RGB Imaging:</b> RGB cameras provided high-resolution images, ideal for surface-level mine detection. Captured data was annotated using Label Studio, a flexible labeling tool, and the YOLO v5 model was trained for object detection. The decision to use YOLO v5 stemmed from its fast inference time and superior performance on small object detection.</p>
+
+                            <p><b>Multispectral Imaging:</b> Multispectral sensors captured data across various wavelengths, revealing details not visible in standard RGB images, such as subtle vegetation disturbances caused by buried mines. Processing these images required optimizing the spectral channel selection to maximize detection accuracy.</p>
+                            <div align="center">
+                                <img src="/img/spectral_labels.jpg" width="80%" alt="Multispectral labeled dataset example" style="margin:20px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 2: Multispectral images with overlaid labels for detected mines.</p>
+                            </div>
+
+                            <h2>4. Results</h2>
+                            <h3>4.1 RGB Imaging</h3>
+                            <p>
+                                The YOLO v5 model achieved notable success, with a precision-recall curve indicating robust detection of anti-personnel mines. Despite its effectiveness, the model's accuracy diminished for smaller or partially obscured mines, underscoring the need for dataset expansion and diversity. The RGB-based approach proved cost-effective and relatively easy to implement, relying solely on commercially available drones and cameras.
+                            </p>
+                            <div align="center">
+                                <img src="/img/precision_recall_curve.png" width="80%" alt="Precision-Recall Curve" style="margin:20px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 5: Precision-Recall curve for YOLO v5 model.</p>
+                            </div>
+
+                            <h2>5. Discussion</h2>
+                            <p>
+                                The RGB-based approach is cost-effective and well-suited for detecting surface-level mines but is inherently limited by its dependence on visible features. Multispectral imaging offers a broader detection spectrum but requires significant optimization in both hardware and software. GPR provides unparalleled capabilities for buried mine detection, though it necessitates further refinement to handle complex subsurface environments. The robotic probing simulation introduces a promising new dimension, allowing for safe and scalable subsurface detection through simulated environments.
+                            </p>
+
+                            <h2>6. Conclusion and Future Work</h2>
+                            <p>
+                                This study underscores the transformative potential of drones, AI, and robotic simulations in landmine detection. By integrating RGB, multispectral, GPR, and probing technologies, this approach offers a comprehensive solution to a critical global issue. Future work should focus on:
+                            </p>
+                            <ul>
+                                <li>Expanding datasets to encompass a wider range of environmental conditions, mine types, and terrains.</li>
+                                <li>Enhancing model architectures to improve accuracy and generalizability across sensing modalities.</li>
+                                <li>Developing real-time detection systems that seamlessly combine data from multiple sensors.</li>
+                                <li>Refining robotic probing techniques, incorporating real-world noise factors, and exploring additional simulation tools.</li>
+                                <li>Investigating alternative radar technologies and advanced signal processing techniques to improve GPR performance.</li>
+                            </ul>
+
+                            <h1>Probing Simulation for Automated Landmine Detection</h1>
+                            <p>
+                                Probing, a method traditionally performed manually by deminers, has been recognized as a reliable but highly dangerous technique for landmine detection. This section explores the automated probing simulation developed using MuJoCo, aiming to enhance safety and efficiency. By leveraging robotic systems equipped with linear actuators, force sensors, and advanced simulation software, this approach seeks to replicate and improve upon traditional methods, reducing the inherent risks to human operators.
+                            </p>
+
+                            <h2>Overview of Probing Methodology</h2>
+                            <p>
+                                Probing involves the careful insertion of a rod into the ground to detect subsurface objects based on resistance feedback. Manual probing requires significant physical effort, concentration, and skill, as even slight miscalculations can lead to triggering explosive devices. The automated probing system replicates this process by using a robotic setup simulated in MuJoCo, a physics-based simulation platform, allowing for detailed experimentation and optimization in a controlled virtual environment.
+                            </p>
+
+                            <h2>Simulation Framework in MuJoCo</h2>
+                            <p>
+                                MuJoCo (Multi-Joint dynamics with Contact) was utilized to design and simulate the probing system. This software provides robust tools for modeling physical interactions, making it ideal for replicating the complex dynamics of probing. Key components of the simulated system include:
+                            </p>
+                            <ul>
+                                <li><b>Linear Actuator:</b> The primary component responsible for vertical probing movements.</li>
+                                <li><b>Force Sensor:</b> Measures resistance during probing to identify potential landmine locations.</li>
+                                <li><b>Prismatic Joints:</b> Enable controlled horizontal and vertical movements of the probing arm.</li>
+                                <li><b>Simulation Environment:</b> Includes a test bed representing soil with buried objects (e.g., landmines).</li>
+                            </ul>
+                            <div class="video-container">
+                                <video width="80%" controls>
+                                    <source src="../img/mine_probing.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p style="font-style:italic; font-size:14px;">
+                                    Figure 1: MuJoCo simulation of the automated probing system, including actuator and test bed.
+                                </p>
+                            </div>
+
+                            <h2>Artificial Dataset Generation</h2>
+                            <p>
+                                To validate the simulation and facilitate training for machine learning models, an artificial dataset was generated. This dataset includes positional data of the probe and corresponding force measurements. The dataset structure is as follows:
+                            </p>
+                            <ul>
+                                <li><b>X-Axis:</b> Horizontal movement of the probe.</li>
+                                <li><b>Y-Axis:</b> Vertical insertion depth.</li>
+                                <li><b>Force (N):</b> Resistance measured during probing.</li>
+                                <li><b>Object Identification:</b> Differentiation between normal soil and buried objects based on force thresholds.</li>
+                            </ul>
+                            <p>
+                                The data was visualized as a point cloud to represent the probing process and identify anomalies consistent with buried landmines.
+                            </p>
+                            <div align="center">
+                                <img src="/img/point_cloud.png" width="48%" alt="Point Cloud" style="margin:10px;">
+                                <img src="/img/surface_plot.png" width="48%" alt="Surface Plot" style="margin:10px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 2: Scatter plot (left) and surface plot (right) of artificially generated probing data, highlighting resistance spikes indicative of buried objects.</p>
+                            </div>
+
+                            <h2>Robotic Model Design</h2>
+                            <p>
+                                The robotic probing system was modeled in Fusion 360 before being integrated into the MuJoCo simulation. The system comprises the following components:
+                            </p>
+                            <ul>
+                                <li><b>Probing Arm:</b> A three-segment assembly with adjustable joints for precise movement.</li>
+                                <li><b>Test Bed:</b> Simulates soil conditions with embedded objects to mimic real-world scenarios.</li>
+                                <li><b>Sensor Integration:</b> Force sensors embedded in the probing tip to measure resistance.</li>
+                                <li><b>Actuators:</b> Provide controlled movement along horizontal and vertical axes.</li>
+                            </ul>
+                            <div class="image-container" align="center">
+                                <img src="/img/probing_model.png" width="80%" alt="3D Model" style="margin:20px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 3: 3D model of the automated probing system, including the test bed and robotic probing arm.</p>
+                            </div>
+
+                            <h2>Simulation Mechanics and Parameters</h2>
+                            <p>
+                                The simulation was configured to closely replicate real-world probing scenarios. Key parameters included:
+                            </p>
+                            <ul>
+                                <li><b>Force Thresholds:</b> Differentiated between normal soil (0.2 to 14.9 N) and potential landmines (15 to 20 N).</li>
+                                <li><b>Insertion Angles:</b> Probing was conducted at a fixed angle of 30° to simulate realistic operational conditions.</li>
+                                <li><b>Movement Precision:</b> Controlled by prismatic joints with fine-tuned damping to avoid jittery motions.</li>
+                                <li><b>Test Bed Composition:</b> Included varying soil densities and embedded objects to evaluate system robustness.</li>
+                            </ul>
+                            <div align="center">
+                                <img src="/img/probing_axes.jpg" width="80%" alt="Probing in Action" style="margin:20px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 4: MuJoCo simulation showing probing arm in action with depth and resistance data overlay.</p>
+                            </div>
+
+                            <h2>Results and Visualization</h2>
+                            <p>
+                                The simulation generated detailed datasets capturing the depth and force measurements across the test bed. The results were analyzed to evaluate the system's ability to differentiate between normal soil and buried objects. Key findings include:
+                            </p>
+                            <ul>
+                                <li><b>Force Anomalies:</b> Clear spikes in force measurements correlated with the locations of embedded objects, validating the effectiveness of the probing mechanism.</li>
+                                <li><b>Depth Accuracy:</b> Positional data confirmed precise movement and consistent depth measurements.</li>
+                                <li><b>Visualization Insights:</b> Point cloud and surface plots provided intuitive representations of the probing results.</li>
+                            </ul>
+                            <div align="center">
+                                <img src="/img/point_cloud_2.png" width="48%" alt="Point Cloud Visualization" style="margin:10px;">
+                                <img src="/img/surface_plot_2.png" width="48%" alt="Surface Plot Visualization" style="margin:10px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 5: Point cloud (left) and surface plot (right) highlighting anomalies corresponding to buried objects.</p>
+                            </div>
+
+                            <h2>Forward Kinematics for Probing System</h2>
+                            <p>
+                                Forward kinematics was employed to calculate the position of the probing tip within the test bed, ensuring comprehensive coverage. The TTT (Translation-Translation-Translation) robot configuration allowed for precise control over the probing process. The kinematic equations are as follows:
+                            </p>
+                            <div class="image-container" align="center">
+                                <img src="/img/robotic_scheme.jpg" width="80%" alt="Kinematic Representation" style="margin:20px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 6: Kinematic representation of the TTT probing robot with a 30° probing angle.</p>
+                            </div>
+
+                            <h2>Discussion</h2>
+                            <p>
+                                The simulation demonstrated the feasibility of automated probing for landmine detection. By integrating precise motion control, force measurement, and realistic soil modeling, the system effectively identified subsurface anomalies. While promising, the system's current limitations include the absence of environmental noise and the simplified soil composition in the test bed. Future iterations will incorporate these factors to bridge the gap between simulation and real-world deployment.
+                            </p>
+
+                            <p>
+                                These efforts will pave the way for scalable, efficient, and safe landmine detection systems, reducing human risk and enabling the reclamation of affected lands.
+                            </p>
+
+                            <h1>Ground Penetrating Radar (GPR) for Landmine Detection</h1>
+                            <p>
+                                Ground Penetrating Radar (GPR) is a geophysical method used for subsurface exploration, providing non-invasive imaging of underground structures. This technology has proven invaluable for applications such as archaeology, construction, and landmine detection. In the context of humanitarian demining, GPR offers a safe and effective alternative to traditional methods, enabling the identification of buried landmines without direct contact.
+                            </p>
+
+                            <h2>Introduction</h2>
+                            <p>
+                                This article focuses on the utilization of GPR for landmine detection, detailing the tools, methodologies, challenges, and solutions developed during a recent study employing the UgCS GeoHammer v.1.1.7 program in conjunction with the COBRA CBD ground radar system.
+                            </p>
+
+                            <h2>GPR Technology Overview</h2>
+                            <p>
+                                GPR operates by transmitting high-frequency electromagnetic waves into the ground and analyzing the reflected signals from subsurface structures. Key features include:
+                            </p>
+                            <ul>
+                                <li><b>High-resolution Imaging:</b> Captures detailed representations of buried objects.</li>
+                                <li><b>Depth Penetration:</b> Varies depending on soil composition and frequency used.</li>
+                                <li><b>Non-destructive Analysis:</b> Ensures the integrity of the site.</li>
+                            </ul>
+
+                            <h2>Experimental Setup</h2>
+                            <h3>Equipment</h3>
+                            <p>
+                                The study utilized the following equipment:
+                            </p>
+                            <ul>
+                                <li><b>Drone with COBRA CBD Ground Radar System:</b> Equipped to carry GPR payloads for efficient and extensive area coverage.</li>
+                                <li><b>UgCS GeoHammer v.1.1.7:</b> Software for processing GPR data and converting raw signals into interpretable graphs.</li>
+                            </ul>
+
+                            <h3>Initial Flight</h3>
+                            <p>
+                                The first flight was conducted in an open area with minimal vegetation. Mines were buried a day prior to the experiment, and their positions were marked with stickers. A simple map of the buried mines was created for validation purposes. The drone flew at a height of approximately 10 meters, collecting radar data across a grid pattern.
+                            </p>
+                            <div align="center">
+                                <div style="display: flex; justify-content: center; gap: 30px;">
+                                    <img src="/img/drone_gpr.jpeg" width="40%" alt="Drone equipped with GPR system">
+                            
+                                    <video width="32%" controls>
+                                        <source src="/img/drone_gpr_video.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <p style="font-style: italic; font-size: 14px;">Figure 1: Drone equipped with COBRA CBD ground radar system.</p>
+                            </div>
+
+                            <h2>Data Analysis</h2>
+                            <h3>UgCS GeoHammer Interface</h3>
+                            <p>
+                                UgCS GeoHammer v.1.1.7 was used to process the radar data. The software provides a user-friendly interface for:
+                            </p>
+                            <ul>
+                                <li><b>Data Conversion:</b> Translates radar signals into visual graphs (radargrams).</li>
+                                <li><b>Signal Processing:</b> Allows for adjustment of parameters to improve clarity.</li>
+                                <li><b>Visualization:</b> Displays subsurface features as distinct patterns.</li>
+                            </ul>
+                            <div align="center">
+                                <img src="/img/ugcs_interface.png" width="80%" alt="UgCS GeoHammer Interface" style="margin:20px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 3: UgCS GeoHammer interface displaying radargram of initial flight.</p>
+                            </div>
+
+                            <h3>Observations</h3>
+                            <p>
+                                The radargrams from the first flight revealed several challenges:
+                            </p>
+                            <ul>
+                                <li><b>Insufficient Data Clarity:</b> Subsurface features, including buried mines, were not distinctly visible.</li>
+                                <li><b>Signal Interference:</b> Environmental noise and soil heterogeneity affected signal quality.</li>
+                            </ul>
+
+                            <h2>Addressing Challenges</h2>
+                            <p>
+                                To improve data accuracy, a second flight was conducted under modified conditions:
+                            </p>
+                            <ul>
+                                <li><b>Surface Markers:</b> Non-buried mines were placed as visible markers to aid radar calibration.</li>
+                                <li><b>Adjusted Parameters:</b> Flight height and radar settings were optimized for better signal penetration and reflection.</li>
+                            </ul>
+                            <!-- <div align="center">
+                                <img src="radargram_second_flight.png" width="80%" alt="Processed Radargram" style="margin:20px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 4: Processed radargram from the second flight, showing surface markers and subsurface features.</p>
+                            </div> -->
+
+                            <h3>Improved Results</h3>
+                            <p>
+                                The inclusion of visible surface markers enhanced the alignment of radar data, making subsurface anomalies more distinguishable. The refined radargrams demonstrated:
+                            </p>
+                            <ul>
+                                <li><b>Clearer Detection:</b> Distinct patterns corresponding to buried mines.</li>
+                                <li><b>Reduced Noise:</b> Improved processing reduced interference from soil variations.</li>
+                            </ul>
+
+                            <h2>Results and Insights</h2>
+                            <p>
+                                The analysis of GPR data confirmed its potential for landmine detection. Key findings include:
+                            </p>
+                            <ul>
+                                <li><b>Anomaly Identification:</b> High-confidence detection of buried objects based on signal anomalies.</li>
+                                <li><b>Operational Efficiency:</b> Drone-mounted GPR enabled rapid coverage of large areas.</li>
+                                <li><b>Data Visualization:</b> Radargrams provided intuitive insights into subsurface structures.</li>
+                            </ul>
+                            <!-- <div align="center">
+                                <img src="radargram_detected_mines.png" width="80%" alt="Detected Mines Radargram" style="margin:20px;">
+                                <p style="font-style:italic; font-size:14px;">Figure 5: Radargram indicating successfully detected buried mines.</p>
+                            </div> -->
+
+                            <h2>Discussion</h2>
+                            <p>
+                                The study highlighted the strengths and limitations of GPR in landmine detection. While the technology offers significant safety and efficiency advantages, challenges remain in optimizing data clarity and reducing environmental noise. Future improvements may include advanced preprocessing techniques and integration with machine learning models for automated anomaly detection.
+                            </p>
+
+                            <h2>Conclusion</h2>
+                            <p>
+                                Ground Penetrating Radar, combined with drone technology and advanced data processing tools like UgCS GeoHammer, represents a promising solution for landmine detection. By addressing current challenges and refining methodologies, this approach can significantly enhance the safety and effectiveness of demining efforts, contributing to global humanitarian goals.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+
+</html>

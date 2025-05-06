@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Used Car Price Prediction - Ivan Smirnov</title>
+    <meta name="author" content="Ivan Smirnov">
+    <meta name="viewport" content="width=1100">
+    <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="./car_prices.css">
+    <link rel="icon" type="image/png" href="../img/logo-car.png">
+    <style>
+        h1 {
+            font-size: 60px;
+        }
+        h2 {
+            font-size: 40px;
+        }
+        h3 {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <table width="1200" border="0" align="center" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="100%" valign="top">
+                            <h1 style="font-size:60px;">Used Car Price Prediction</h1>
+                            <p>
+                                This project utilizes machine learning techniques to predict the prices of used cars. The implementation combines robust preprocessing, modeling with <b>Random Forest Regressor</b>, <b>Linear Regression</b>, <b>Gradient Boosting</b>, and an interactive <b>PyQt application</b> for user engagement.
+                            </p>
+
+                            <h2>Introduction</h2>
+                            <p>
+                                According to a report by <a href="https://www.mckinsey.com/industries/automotive-and-assembly/our-insights/used-cars-new-platforms-accelerating-sales-in-a-digitally-disrupted-market" target="_blank">McKinsey & Company</a>, the digital revolution is transforming the used-car retailing industry by focusing on enhancing the customer experience. Online platforms are challenging traditional used-car dealers by empowering customers with complete end-to-end purchasing options, extensive vehicle data and photos, and unique delivery methods. The report reveals that the used-car market in the United States is more than twice the size of the new-car market, with 39.4 million used cars sold annually compared to 17.3 million new cars. Moreover, the used-car market is less volatile and provides a safer investment during economic downturns, making it an attractive segment for both consumers and businesses. For more insights into the factors driving buyer preferences, refer to <a href="https://www.autoremarketing.com/trends/features-info-used-car-buyers-want-most" target="_blank">Auto Remarketing</a>.
+                            </p>
+                            <br>
+                            <p>
+                                To make machine learning technology accessible and user-friendly for the used-car market, integrating predictive models into interactive applications is essential. PyQt, a set of Python bindings for the Qt application framework, enables the development of cross-platform graphical user interfaces (GUIs). By leveraging PyQt, this project creates an interactive application that allows users to input specific car details and receive immediate price predictions, thereby streamlining the valuation process. Using the "Used Car Auction Prices" dataset, we aim to identify the most important features influencing used-car pricing at auctions. A survey by CarStory found that the key features online shoppers prioritize include vehicle condition, accident history, service history, listing price, value, make, and mileage. These insights align with our dataset, and by applying machine learning, we aim to provide valuable insights into the factors driving used-car pricing, supporting both buyers and sellers in this growing market.
+                            </p>
+
+                            <h2>Dataset and Preprocessing</h2>
+                            <p>
+                                Accurate prediction of used car prices relies heavily on the quality and preparation of the dataset. In this work, we utilized the <a href="https://www.kaggle.com/tunguz/used-car-auction-prices" target="_blank">"Used Car Auction Prices"</a> dataset sourced from Kaggle, which contains comprehensive information about cars sold at auctions, including their specifications, conditions, and selling prices. This section provides a detailed overview of the dataset, preprocessing techniques, and the transformations applied to prepare the data for machine learning models.
+                            </p>
+                            <h3>Dataset Description</h3>
+                            <p>
+                                The dataset comprises 558,811 rows and 16 columns, capturing detailed information about each vehicle. Key features in the dataset include:
+                            </p>
+                            <ul>
+                                <li><b>Year:</b> The manufacturing year of the vehicle.</li>
+                                <li><b>Make:</b> The manufacturer of the vehicle (e.g., BMW, Toyota).</li>
+                                <li><b>Model:</b> The specific model of the vehicle (e.g., 3 Series, Corolla).</li>
+                                <li><b>Transmission:</b> The type of transmission (manual or automatic).</li>
+                                <li><b>Condition:</b> A numerical value (1.0 to 5.0) representing the car's condition.</li>
+                                <li><b>Odometer:</b> The distance the vehicle has traveled, measured in miles.</li>
+                                <li><b>Body:</b> The body style of the vehicle (e.g., sedan, SUV).</li>
+                                <li><b>State:</b> The U.S. state where the car was sold.</li>
+                                <li><b>Color:</b> The exterior color of the car.</li>
+                                <li><b>Interior:</b> The interior color of the car.</li>
+                                <li><b>Selling Price:</b> The final selling price of the vehicle, the target variable for our prediction.</li>
+                            </ul>
+                            <h3>Dataset Statistics Before Preprocessing</h3>
+                            <p>
+                                Before any preprocessing, the dataset had several issues, including missing values, irrelevant columns, and skewed distributions.
+                            </p>
+                            <table border="1" width="100%" class="research-table">
+                                <caption>Table 1: Dataset Statistics Before Preprocessing</caption>
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Data Type</th>
+                                        <th>Missing Values</th>
+                                        <th>Example Values</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Year</td>
+                                        <td>Integer</td>
+                                        <td>0</td>
+                                        <td>2014, 2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Make</td>
+                                        <td>Categorical</td>
+                                        <td>10,301</td>
+                                        <td>BMW, Kia</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Model</td>
+                                        <td>Categorical</td>
+                                        <td>10,399</td>
+                                        <td>3 Series, Sorento</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Transmission</td>
+                                        <td>Categorical</td>
+                                        <td>65,353</td>
+                                        <td>Manual, Automatic</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Condition</td>
+                                        <td>Float</td>
+                                        <td>11,794</td>
+                                        <td>3.6, 4.1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Odometer</td>
+                                        <td>Float</td>
+                                        <td>94</td>
+                                        <td>12,000, 50,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Body</td>
+                                        <td>Categorical</td>
+                                        <td>13,195</td>
+                                        <td>Sedan, SUV</td>
+                                    </tr>
+                                    <tr>
+                                        <td>State</td>
+                                        <td>Categorical</td>
+                                        <td>0</td>
+                                        <td>CA, TX</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color</td>
+                                        <td>Categorical</td>
+                                        <td>749</td>
+                                        <td>White, Black</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Selling Price</td>
+                                        <td>Float</td>
+                                        <td>0</td>
+                                        <td>15,000, 25,000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <img src="../img/missing.png" width="100%" alt="Dataset Before Preprocessing">
+                            <h3>Preprocessing Steps</h3>
+                            <p>
+                                To prepare the dataset for modeling, the following preprocessing steps were performed:
+                            </p>
+                            <ul>
+                                <li><b>Handling Missing Values:</b> Rows with missing values in critical columns such as Make, Model, Transmission, Condition, Odometer, and Body were dropped. This step reduced the dataset to 472,336 rows, ensuring that all remaining records had complete information.</li>
+                                <li><b>Dropping Irrelevant Columns:</b> Columns that were deemed irrelevant to price prediction were removed, including:
+                                    <ul>
+                                        <li><b>vin:</b> A unique identifier for each car, not related to pricing.</li>
+                                        <li><b>saledate:</b> The date of sale, which does not directly influence the price.</li>
+                                        <li><b>seller:</b> The seller's name, which is not significant for prediction.</li>
+                                    </ul>
+                                </li>
+                                <li><b>Standardizing Categorical Values:</b> All string values were converted to lowercase to ensure consistency (e.g., "SUV" and "suv" were standardized to "suv"). Transmission types were encoded numerically, where 0 represented manual and 1 represented automatic.</li>
+                                <li><b>Encoding Categorical Variables:</b> Label encoding was applied to categorical variables (Make, Model, Body, etc.) to convert them into numerical values suitable for machine learning algorithms.</li>
+                                <li><b>Log Transformation:</b> The target variable, Selling Price, exhibited significant skewness. A log transformation was applied to normalize the distribution, making it more suitable for regression tasks.</li>
+                            </ul>
+                            <h3>Dataset Statistics After Preprocessing</h3>
+                            <table border="1" width="100%" class="research-table">
+                                <caption>Table 2: Dataset Statistics After Preprocessing</caption>
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Data Type</th>
+                                        <th>Missing Values</th>
+                                        <th>Unique Values (Encoded)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Year</td>
+                                        <td>Integer</td>
+                                        <td>0</td>
+                                        <td>25</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Make</td>
+                                        <td>Integer</td>
+                                        <td>0</td>
+                                        <td>85</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Model</td>
+                                        <td>Integer</td>
+                                        <td>0</td>
+                                        <td>637</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Transmission</td>
+                                        <td>Integer</td>
+                                        <td>0</td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Condition</td>
+                                        <td>Float</td>
+                                        <td>0</td>
+                                        <td>41</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Odometer</td>
+                                        <td>Float</td>
+                                        <td>0</td>
+                                        <td>Continuous</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Body</td>
+                                        <td>Integer</td>
+                                        <td>0</td>
+                                        <td>45</td>
+                                    </tr>
+                                    <tr>
+                                        <td>State</td>
+                                        <td>Integer</td>
+                                        <td>0</td>
+                                        <td>50</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color</td>
+                                        <td>Integer</td>
+                                        <td>0</td>
+                                        <td>30</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Selling Price</td>
+                                        <td>Float</td>
+                                        <td>0</td>
+                                        <td>Continuous</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>
+                                The distribution of selling prices before and after log transformation is depicted in the following histograms:
+                            </p>
+                            <div class="image-container">
+                                <img src="../img/selling_price_before.png" width="45%" alt="Original Selling Price Distribution">
+                                <img src="../img/selling_price_after.png" width="45%" alt="Log-Transformed Selling Price Distribution">
+                                <p><b>Figure</b>: Original (left) and log-transformed (right) distributions of selling prices.</p>
+                            </div>
+
+                            <h2>Exploratory Data Analysis</h2>
+                            <p>
+                                Exploratory Data Analysis (EDA) is a crucial step in understanding the dataset and identifying patterns and relationships between features. This section highlights insights gained from the dataset, including feature correlations, distributions, and trends. Visualizations such as histograms, scatterplots, and heatmaps are used to aid the analysis.
+                            </p>
+                            <h3>Correlation Analysis and Heatmap</h3>
+                            <p>
+                                Understanding the relationships between features and the target variable (Selling Price) is essential for building an effective predictive model. The correlation matrix reveals the degree of linear association between numerical features.
+                            </p>
+                            <p>
+                                <b>Key Observations from Correlation Analysis:</b>
+                            </p>
+                            <ul>
+                                <li><b>Year (r=0.78):</b> Newer vehicles tend to have higher selling prices.</li>
+                                <li><b>Condition (r=0.62):</b> Vehicles in better condition command higher prices.</li>
+                                <li><b>Odometer (r=-0.72):</b> Vehicles with higher mileage generally sell for less.</li>
+                                <li>Features like <b>Transmission (r=0.07)</b> and <b>Body (r=-0.07)</b> have weaker correlations but still provide useful categorical distinctions.</li>
+                            </ul>
+                            <div class="image-container" style="text-align: center;display: inline-block; margin-top: 5px;" width="100%">
+                                <img src="../img/heatmap_price.png" width="70%" style="text-align: center;display: inline-block;" alt="Correlation Heatmap">
+                            </div>
+
+                            <h3>Distribution of Key Features</h3>
+                            <p>
+                                Analyzing the distribution of key features helps to understand their range, central tendencies, and potential skewness.
+                            </p>
+                            <ul>
+                                <li><b>Year:</b> Vehicles manufactured between 2010 and 2015 dominate the dataset. Older cars (before 2000) are relatively rare and tend to have lower selling prices.</li>
+                                <li><b>Condition:</b> The condition of vehicles is concentrated between 2.5 and 5.0, with few vehicles in poor condition (&lt;2.0).</li>
+                                <li><b>Odometer:</b> The majority of cars in the dataset have mileage between 10,000 and 100,000 miles. Higher mileage cars exhibit lower selling prices, highlighting the strong inverse correlation.</li>
+                            </ul>
+                            <div class="image-container">
+                                <img src="../img/year_dist.png" width="49%" alt="Year Distribution">
+                                <img src="../img/condition_dist.png" width="49%" alt="Condition Distribution">
+                                <img src="../img/odom_dist.png" width="49%" alt="Odometer Distribution">
+                            </div>
+
+                            <h3>Relationships Between Features</h3>
+                            <ul>
+                                <li><b>Selling Price vs. Odometer:</b> Odometer or millage is one of the most important feature buyers would be interested in while buying a used car.
+                                    Generally the fewer km's on the odometer of a used car means a higher selling price. In some special circumstances however people may pay more / less regardless of the odometer reading. A scatterplot highlights the inverse relationship between mileage and selling price.
+                                    <div class="image-container">
+                                        <img src="../img/selling_price_vs_odometer.png" width="100%" alt="Selling Price vs. Odometer">
+                                    </div>
+                                </li>
+                                <li><b>Selling Price vs. Year:</b> The model year of a car can also be a selling point. Latest car models can sale for higher price given the condition of the car is good.
+                                    We see from the graph below that on average the price increases as the model year get more recent.
+                                    We also see that cars of the early 80's sold for higher prices. These are possibly skewed average prices due to the presence of top brand cars.
+                                    <div class="image-container">
+                                        <img src="../img/selling_price_vs_year.png" width="100%" alt="Selling Price vs. Year">
+                                    </div>
+                                </li>
+                                <li><b>Selling Price vs. Condition:</b> Buyers of a used-car rightly put huge importance on the conditions of the car. No one would like to put more money in than the price of the car on maintenance and upgrade. So the state of the car is vital. A positive correlation is evident, with well-maintained cars in better condition achieving higher prices.
+                                    <div class="image-container">
+                                        <img src="../img/selling_price_vs_condition.png" width="100%" alt="Selling Price vs. Condition">
+                                    </div>
+                                </li>
+                                <li><b>Selling Price vs. MMR:</b> MMR, which is short for the <a href="https://joinyaa.com/guides/what-are-mmr-values/" target="_blank">Manheim Market Report</a>, is a specific report that's available to auto wholesalers.
+                                    MMR provides data about the wholesale prices of vehicles for the past 13 months. All of this data is generated by real vehicle sales at the Manheim auction houses found throughout the country.
+                                    Since MMR gathers data based on its own sales, it can be considered to be quite accurate. Every sale made at an auction house in the Manheim network is tracked, analyzed, and used when someone generates a report for the same vehicle.
+                                    <div class="image-container">
+                                        <img src="../img/selling_price_vs_mmr.png" width="100%" alt="Selling Price vs. Condition">
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <h2>Model Training and Evaluation</h2>
+
+                            <p>
+                                In addition to the <b>Random Forest Regressor</b>, other models such as <b>Linear Regression</b> and <b>Gradient Boosting Regressor</b> were trained and evaluated for comparison. Each model was assessed based on its R² Score, Mean Absolute Error (MAE), and Root Mean Squared Error (RMSE) to understand its predictive performance.
+                            </p>
+                            <p>
+                                The <b>Linear Regression</b> model served as a baseline for comparison due to its simplicity and ability to model linear relationships between features and the target variable.
+                                While Linear Regression is computationally efficient, its inability to capture non-linear relationships limits its performance on this dataset.
+                            </p>
+                            <p>
+                                The <b>Gradient Boosting Regressor</b> was used as a more sophisticated model capable of handling non-linear relationships. It performs well but is computationally intensive and slightly less accurate than Random Forest on this dataset.
+                            </p>
+                            <p>
+                                
+                            </p>
+
+                            <h3>Summary of Results</h3>
+                            <table border="1" style="width:100%; text-align:left; border-collapse: collapse;">
+                                <thead>
+                                    <tr>
+                                        <th style="padding: 8px; border: 1px solid #ddd;"><b>Model</b></th>
+                                        <th style="padding: 8px; border: 1px solid #ddd;"><b>R² Score</b></th>
+                                        <th style="padding: 8px; border: 1px solid #ddd;"><b>MAE ($)</b></th>
+                                        <th style="padding: 8px; border: 1px solid #ddd;"><b>RMSE ($)</b></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">Random Forest</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;"><b>0.9584</b></td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;"><b>39.65</b></td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;"><b>61.24</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">Linear Regression</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">0.5278</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">158.70</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">206.33</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">Gradient Boosting</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">0.7903</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">97.88</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">137.49</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <h3>Insights and Conclusions</h3>
+                            <ul>
+                                <li><b>Random Forest:</b> Outperformed other models with the highest R² Score and the lowest MAE and RMSE.</li>
+                                <li><b>Linear Regression:</b> Struggled with the non-linear relationships in the data, resulting in lower accuracy and higher errors.</li>
+                                <li><b>Gradient Boosting:</b> Achieved a balance between performance and flexibility, offering a viable alternative but still trailing behind Random Forest.</li>
+                            </ul>
+                            <div class="image-container">
+                                <img src="../img/roc_auc_price.png" width="100%" style="margin-top: 10px;" alt="Learning Curves">
+                            </div>
+
+                            <h3>PyQt Application Overview</h3>
+                            <p>
+                                The PyQt application provides an intuitive and interactive way for users to predict used car prices based on specific vehicle details. It dynamically updates predictions and visualizations, making it both powerful and user-friendly.
+                            </p>
+                            <ul>
+                                <li><b>Tab 1:</b> Provides input fields for selecting the car manufacturer, model, body type, and odometer reading.</li>
+                                <li><b>Tab 2:</b> Additional inputs for condition, year, and transmission type (automatic/manual).</li>
+                                <li><b>Dynamic Graphs:</b> Plots dynamically adjust to reflect the user's inputs, offering insights into trends affecting car pricing.</li>
+                                <li><b>Status Bar:</b> Provides feedback, such as predicted prices or warnings for invalid inputs.</li>
+                                <li><b>Save Plot Feature:</b> Users can save graphs for documentation or future reference.</li>
+                            </ul>
+                            <div class="image-container">
+                                <img src="../img/main_screen_cars.png" width="70%" style="margin-top: 10px;" alt="Prediction Result Interface">
+                            </div>
+
+                            <h3>Application Implementation Details</h3>
+                            <p>
+                                The application leverages the PyQt6 framework for the graphical user interface and integrates a Random Forest Regressor for machine learning predictions. Key highlights include:
+                            </p>
+                            <ul>
+                                <li><b>Signal-Slot Mechanism:</b> Ensures real-time updates when user inputs change.</li>
+                                <li><b>Dynamic Visualization:</b> Matplotlib integration provides plots that adjust based on the selected x-axis feature and predicted prices.</li>
+                                <li><b>Model Integration:</b> The pre-trained Random Forest model predicts prices based on encoded and transformed user inputs.</li>
+                            </ul>
+                            <div class="image-container">
+                                <img src="../img/secondary_screen_cars.png" width="49%" style="margin-top: 10px;" alt="Dynamic Visualization">
+                                <img src="../img/prediction_screen_cars.png" width="49%" style="margin-top: 10px;" alt="Dynamic Visualization">
+                            </div>
+
+                            <h2>Conclusion</h2>
+                            <p>
+                                The Random Forest Regressor demonstrated outstanding predictive performance for used car price prediction, significantly outperforming the baseline Linear Regression model. Its ability to capture non-linear relationships and rank feature importance makes it a robust choice for this task. The integration of the model into an interactive PyQt application further enhances its accessibility and usability, providing a user-friendly and dynamic tool for predicting used car prices.
+                            </p>
+                            <br>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

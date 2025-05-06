@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Autonomous Lawnmower - Sensor Setup and Integration</title>
+    <meta name="author" content="Your Name">
+    <meta name="viewport" content="width=1100">
+    <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+    <link rel="icon" type="image/png" href="../img/logo-rocket.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #0f0f0f;
+            color: #ffffff;
+        }
+
+        img, video {
+            border-radius: 2px;
+            margin: 10px 0;
+        }
+
+        .image-container, .video-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        h1, h2, h3, h4, h5 {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        p, ul, ol {
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 40px;
+        }
+
+        code {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            padding: 3px 5px;
+            border-radius: 3px;
+        }
+
+        .diagram {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .diagram img {
+            border: 1px solid #444;
+            padding: 10px;
+            background: #1a1a1a;
+        }
+
+        .highlight {
+            background: #1e3a5f;
+            border-left: 5px solid #2196F3;
+            padding: 10px;
+            margin: 20px 0;
+        }
+
+        .code-block {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 900px;
+            border: 0;
+            margin: 0 auto;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        a {
+            color: #2470ce;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Ensure the main content takes 50% of the page */
+        .content-wrapper {
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <table width="900" border="0" align="center" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="100%" valign="top">
+                            <div class="content-wrapper">
+                                <h1>Autonomous Lawnmower - Sensor Setup and Integration</h1>
+                                <p>
+                                    This report details the sensor selection, setup, and integration process for developing an autonomous lawnmower capable of reliable obstacle avoidance and precise navigation in challenging outdoor environments.
+                                </p>
+
+                                <h2>3. Demonstration</h2>
+                                <div class="video-container">
+                                    <video width="80%" controls>
+                                        <source src="../img/lawn_robot.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p style="font-style:italic; font-size:14px;">
+                                        Figure: Demonstration of the autonomous lawnmower controlled via a smartphone.
+                                    </p>
+                                </div>
+
+                                <h2>4. Structure</h2>
+                                <p>
+                                    The autonomous lawnmower is composed of a mechanical base integrated with a robust electronic control system. The components work together to ensure reliable navigation, obstacle avoidance, and remote operation.
+                                </p>
+
+                                <h2>Component Layout</h2>
+                                <p>
+                                    The main elements of the lawnmower system are strategically placed:
+                                </p>
+                                <ul>
+                                    <li><b>Mechanical Base:</b> The red Troy-Bilt TB200 engine provides the primary power for propulsion and mowing. It serves as the foundation of the system.</li>
+                                    <li><b>Electronics Enclosure:</b> Positioned on top of the engine, the gray box houses critical electronic components, including controllers, relays, and a charge management system.</li>
+                                    <li><b>Emergency Stop Button:</b> Mounted on the gray enclosure, this safety feature allows for an immediate shutdown in case of emergency.</li>
+                                    <li><b>Computational Unit:</b> Inside the enclosure, the iuniker Raspberry Pi Case with a dual-fan cooling system houses a Raspberry Pi 3 Model B for data processing and control of navigation and obstacle avoidance.</li>
+                                    <li><b>Cooling Fans:</b> Located on the sides of the gray enclosure, they ensure proper ventilation to prevent overheating of internal components.</li>
+                                    <li><b>Sensors:</b> The setup includes ultrasonic sensors and other peripherals for obstacle detection, mounted at the front and rear for comprehensive coverage.</li>
+                                    <li><b>Camera:</b> A Huddly Go 1.0 high-end conferencing camera is included for video monitoring and advanced navigation capabilities.</li>
+                                </ul>
+
+                                <h3>Figure 1: Exterior View of the Lawnmower</h3>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <img src="/img/lawn_robot_exterior.jpg" alt="Exterior view of the autonomous lawnmower" style="width:48%;">
+                                    <img src="/img/lawn_robot_camera.jpg" alt="Huddly Go Camera" style="width:48%;">
+                                </div>
+                                <p>This figure shows the overall design of the autonomous lawnmower. The red base houses the Troy-Bilt TB200 engine, which provides the mechanical power for cutting or propulsion. The gray enclosure on top contains the electronic components for automation and control. Additionally, the Huddly Go Camera enhances visual monitoring and navigation capabilities.</p>
+
+                                <h3>Figure 2: Interior of the Electronics Enclosure</h3>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <img src="/img/lawn_robot_interior_1.jpg" alt="Inside view of the electronics enclosure" style="width:48%;">
+                                    <img src="/img/lawn_robot_interior_2.jpg" alt="Computational setup inside the enclosure" style="width:48%;">
+                                </div>
+                                <p>This figure provides a closer look at the components inside the gray electronics enclosure. Key elements include:
+                                    <ul>
+                                        <li><strong>SmartSolar Charge Controller:</strong> Manages the battery charging process, optimizing energy intake from solar panels.</li>
+                                        <li><strong>TEMCo Relays:</strong> High-current switches to control power flow to motors or other components.</li>
+                                        <li><strong>Cooling Fan:</strong> Prevents overheating of internal components.</li>
+                                        <li><strong>Raspberry Pi Case:</strong> The iuniker Raspberry Pi Case with dual fans protects the Raspberry Pi 3 Model B while ensuring optimal cooling.</li>
+                                        <li><strong>USB Hub:</strong> The Atolla 4-Port USB 3.0 Hub connects peripherals such as sensors and communication devices.</li>
+                                        <li><strong>Wiring:</strong> Distributes power and control signals between components.</li>
+                                    </ul>
+                                </p>
+
+                                <h2>5.1 Sensor Selection and Rationale</h2>
+                                <p>
+                                    The obstacle avoidance system for the autonomous lawnmower was designed to operate reliably in outdoor environments characterized by high vibrations, humidity, and exposure to grass clippings. Initial evaluations of sensor technologies included:
+                                </p>
+                                <ul>
+                                    <li><b>Ultrasonic Sensors:</b> The widely used HCS4 ultrasonic sensor was deemed unsuitable due to its susceptibility to environmental factors such as grass clippings entering the transducers and rendering them inoperative.</li>
+                                    <li><b>LiDAR Sensors:</b> Compact laser sensors like the TF Mini LiDAR, though precise, offered a limited field of view, making them impractical for comprehensive coverage.</li>
+                                </ul>
+                                <p>
+                                    As an alternative, <b>automotive parking sensors</b> were selected for their robustness, affordability, and compatibility with custom interfacing solutions. A commercially available eight-sensor parking module was used, capable of detecting obstacles with centimeter-level precision. This decision leveraged the module's built-in signal processing and real-world reliability in adverse conditions.
+                                </p>
+
+                                <h2>5.2 Parking Sensor Module Integration</h2>
+                                <h3>5.2.1 Hardware Setup</h3>
+                                <p>
+                                    The eight-sensor module included:
+                                </p>
+                                <ul>
+                                    <li><b>Ultrasonic Sensors:</b> Mounted at the front and rear of the lawnmower, replicating typical car installations.</li>
+                                    <li><b>Control Unit:</b> Responsible for generating and processing sensor signals.</li>
+                                    <li><b>Output Display Module:</b> Used for debugging during initial setup.</li>
+                                </ul>
+                                <p>
+                                    Sensors were mounted in 3D-printed enclosures attached to the lawnmower's front bumper. These housings were designed to shield sensors from environmental hazards while maintaining optimal field of view.
+                                </p>
+
+                                <h3>5.2.2 Signal Decoding</h3>
+                                <p>
+                                    Data from the sensor module was accessed via a logic analyzer to understand its communication protocol. Observations included:
+                                </p>
+                                <ul>
+                                    <li><b>Packet Structure:</b> Each data packet began with a 1ms starting pulse, followed by a sequence of shorter pulses representing binary data. These binary sequences encoded both the sensor address and the measured distance.</li>
+                                    <li><b>Timing Characteristics:</b> Packets were transmitted every 35ms, ensuring low latency for real-time obstacle detection.</li>
+                                </ul>
+
+                                <h3>5.2.3 Microcontroller Interfacing</h3>
+                                <p>
+                                    The parking sensor module was interfaced with an Arduino Due microcontroller:
+                                </p>
+                                <ul>
+                                    <li><b>Signal Pin Connection:</b> The signal wire from the sensor control unit was connected to pin 7 on the Arduino.</li>
+                                    <li><b>Data Processing:</b> A 32-bit unsigned integer was used to store complete data packets, with 8 bits allocated for the sensor address and 8 bits for distance values.</li>
+                                    <li><b>Pulse Measurement Logic:</b> The Arduino sketch included logic to detect starting pulses and map subsequent pulses to binary data. Decoded values were printed via the serial port for debugging.</li>
+                                </ul>
+
+                                <h3>5.2.4 Results from Signal Decoding</h3>
+                                <p>
+                                    Initial tests revealed an issue: although the module supported eight sensors, only six were actively transmitting data packets. Investigation showed that the middle two front sensors were inactive, likely due to a limitation in the module's firmware. This anomaly was deemed acceptable, as the application prioritized precision over coverage.
+                                </p>
+
+                                <h2>5.3 GPS Real-Time Kinematics (RTK) Integration</h2>
+                                <h3>5.3.1 RTK Setup</h3>
+                                <p>
+                                    To enable precise navigation, the project employed RTK technology using the ZED-F9P GPS module. The RTK system provided centimeter-level accuracy by correcting positional data using a base station. Key steps included:
+                                </p>
+                                <ul>
+                                    <li>Downloading RTKLIB sources from <a href="https://github.com/tomojitakasu/RTKLIB/tree/master/app" target="_blank">RTKLIB GitHub</a>.</li>
+                                    <li>Reading the RTKLIB manual <a href="https://github.com/tomojitakasu/RTKLIB/blob/master/doc/manual_2.4.2.pdf" target="_blank">here</a>.</li>
+                                    <li>Installing RTKLIB (only str2str) in a Raspberry Pi environment:
+                                        <div class="code-block">
+                                            <pre><code>cd &lt;install_dir&gt;/rtklib/app/str2str/gcc
+make
+make install
+</code></pre>
+                                        </div>
+                                    </li>
+                                    <li>Running str2str with the following command:
+                                        <div class="code-block">
+                                            <pre><code>>/usr/local/bin/str2str -in ntrip://:6n9c2TxqKwuc@rtk2go.com:2101/Wexford -out serial://ttyACM0:115200:8:n:1:off
+</code></pre>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <h3>5.3.2 Automation with Systemd</h3>
+                                <p>
+                                    To ensure seamless operation, systemd services and udev rules were implemented:
+                                </p>
+                                <div class="code-block">
+                                    <pre><code>ACTION=="add", SUBSYSTEM=="tty", KERNEL=="ttyACM*", ATTRS{idVendor}=="1546", TAG+="systemd", ENV{SYSTEMD_WANTS}+="location@%k.service"
+</code></pre>
+                                </div>
+                                <p>
+                                    This udev rule allows the GPS to be initialized when plugged in and starts the corresponding service automatically. The service file should be placed in <code>/etc/systemd/system/location@.service</code> with the following content:
+                                </p>
+                                <div class="code-block">
+                                    <pre><code>[Unit]
+Description=RTCM Base Station
+
+[Service]
+ExecStart=/usr/local/bin/str2str -in serial://ttyACM0:115200:8:n:1:off -out ntrips://:6n9c2TxqKwuc@rtk2go.com:2101/Wexford
+Restart=always
+User=nobody
+RestartSec=1 # Restart after 1 second
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+                                </div>
+                                <p>
+                                    After creating the service file, enable and start the service:
+                                </p>
+                                <div class="code-block">
+                                    <pre><code>sudo systemctl daemon-reload
+sudo systemctl start location@ttyACM0
+sudo systemctl enable location@ttyACM0
+</code></pre>
+                                </div>
+                                <p>
+                                    Verify the service is running:
+                                </p>
+                                <div class="code-block">
+                                    <pre><code>systemctl --type=service --state=running
+systemctl list-units --all --full | grep ".device"
+</code></pre>
+                                </div>
+
+                                <h2>5.4 Camera Integration for Obstacle Context (Optional)</h2>
+                                <p>
+                                    A supplementary camera system was included for visual monitoring. The MJPG-streamer package facilitated real-time video streaming to a local network:
+                                </p>
+                                <div class="code-block">
+                                    <pre><code>./mjpg_streamer -o "output_http.so -w ./www" -i "input_uvc.so -r 640x480 -n"
+</code></pre>
+                                </div>
+                                <p>
+                                    The live stream will be accessible at <code>192.168.0.127:3000</code>.
+                                </p>
+
+                                <h2>5.5 Challenges and Solutions</h2>
+                                <h3>5.5.1 Sensor Reliability</h3>
+                                <p>
+                                    Signal inconsistencies were observed during early tests, likely caused by environmental noise. These were mitigated by:
+                                </p>
+                                <ul>
+                                    <li>Adding capacitors to stabilize power supply lines.</li>
+                                    <li>Implementing software-based noise filtering.</li>
+                                </ul>
+
+                                <h3>5.5.2 GPS Drift</h3>
+                                <p>
+                                    GPS drift under dense foliage and during overcast conditions was addressed by:
+                                </p>
+                                <ul>
+                                    <li>Optimizing base station placement for unobstructed sky visibility.</li>
+                                    <li>Adjusting RTKLIB settings to prioritize accuracy over update rate.</li>
+                                </ul>
+
+                                <h3>5.5.3 Sensor Coverage</h3>
+                                <p>
+                                    The inability of the middle front sensors to detect obstacles was attributed to module limitations. Alternative placement and reliance on active sensors ensured adequate coverage.
+                                </p>
+
+                                <h2>6. GPS-Rider and GPS-Station Integration</h2>
+                                <h3>6.1 GPS-Rider Setup</h3>
+                                <p>
+                                    The GPS-Rider repository handles the real-time streaming of GPS data to the autonomous lawnmower. Key configurations include:
+                                </p>
+                                <ul>
+                                    <li>Running network services on <code>192.168.0.127:3000</code>.</li>
+                                    <li>Installing and configuring RTKLIB as detailed above.</li>
+                                    <li>Managing device connections using systemd and udev rules.</li>
+                                </ul>
+                                <p>
+                                    Additional commands and configurations:
+                                </p>
+                                <ul>
+                                    <li>List available device unit files:
+                                        <div class="code-block">
+                                            <pre><code>systemctl list-units --all --full | grep ".device"
+</code></pre>
+                                        </div>
+                                    </li>
+                                    <li>Monitor device connections:
+                                        <div class="code-block">
+                                            <pre><code>udevadm monitor
+udevadm info -a -n /dev/ttyACM0 | less
+</code></pre>
+                                        </div>
+                                    </li>
+                                    <li>Test the port using screen:
+                                        <div class="code-block">
+                                            <pre><code>screen /dev/ttyACM0 115200
+Ctrl-a+Ctrl-\ - Exit screen and terminate all programs in this screen.
+Ctrl-a+d or Ctrl-a+Ctrl-d - "minimize" screen, screen -r to restore it.
+</code></pre>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <h3>6.2 GPS-Station Setup</h3>
+                                <p>
+                                    The GPS-Station repository manages the base station operations for RTK corrections. Steps include:
+                                </p>
+                                <ul>
+                                    <li>Using a Raspberry Pi 3+ for setup.</li>
+                                    <li>Installing u-center from u-blox: <a href="https://www.u-blox.com/en/product/u-center" target="_blank">u-center Download</a>.</li>
+                                    <li>Configuring the ZED-F9P module in "TIME" mode as per tutorial videos.</li>
+                                    <li>Streaming RTCM correction data to RTK2go:
+                                        <div class="code-block">
+                                            <pre><code>sudo systemctl daemon-reload
+sudo systemctl start location@ttyACM0
+sudo systemctl enable location@ttyACM0
+</code></pre>
+                                        </div>
+                                    </li>
+                                    <li>Registering and configuring the RTK2go caster with the provided mount point and password.</li>
+                                </ul>
+                                <p>
+                                    Example service file content:
+                                </p>
+                                <div class="code-block">
+                                    <pre><code>[Unit]
+Description=RTCM Base Station
+
+[Service]
+ExecStart=/usr/local/bin/str2str -in serial://ttyACM0:115200:8:n:1:off -out ntrips://:6n9c2TxqKwuc@rtk2go.com:2101/Wexford
+Restart=always
+User=nobody
+RestartSec=1 # Restart after 1 second
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+                                </div>
+
+                                <h2>7. References</h2>
+                                <ul>
+                                    <li>RTKLIB Documentation: <i><a href="https://rtklib.com/" target="_blank">https://rtklib.com/</a></i></li>
+                                    <li>Arduino Due Official Documentation: <i><a href="https://www.arduino.cc/en/Reference/ArduinoDue" target="_blank">https://www.arduino.cc/en/Reference/ArduinoDue</a></i></li>
+                                    <li>MJPG-streamer GitHub Repository: <i><a href="https://github.com/jacksonliam/mjpg-streamer" target="_blank">https://github.com/jacksonliam/mjpg-streamer</a></i></li>
+                                    <li>RTKLIB GitHub Repository: <i><a href="https://github.com/tomojitakasu/RTKLIB" target="_blank">https://github.com/tomojitakasu/RTKLIB</a></i></li>
+                                    <li>u-center by u-blox: <i><a href="https://www.u-blox.com/en/product/u-center" target="_blank">https://www.u-blox.com/en/product/u-center</a></i></li>
+                                    <li>MJPG-streamer Output HTTP Plugin: <i><a href="https://github.com/jacksonliam/mjpg-streamer/blob/master/mjpg-streamer-experimental/plugins/output_http/README.md" target="_blank">Output HTTP Plugin README</a></i></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
